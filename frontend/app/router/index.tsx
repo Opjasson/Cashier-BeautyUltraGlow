@@ -28,7 +28,7 @@ const Stack = createNativeStackNavigator();
 const Router = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-            {/* <Stack.Screen name="SplashScreen" component={SplashScreen} /> */}
+            <Stack.Screen name="SplashScreen" component={SplashScreen} />
             {/* <Stack.Screen name="LoginPage" component={LoginPage} /> */}
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="KelolaProduct" component={KelolaProduct} />
