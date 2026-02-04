@@ -24,21 +24,14 @@ const index: React.FC<Props> = ({navigation}) => {
                 </View>
                 <View>
                     <Text style={styles.txtCoffe}>
-                        Cashier Klinik Ultra Glow
+                        Cashier Clinic Ultra Glow
                     </Text>
                     <Text style={styles.txtCoffe2}>
                         Aplikasi untuk mengelola transaksi product Ultra Glow
                     </Text>
                 </View>
 
-                <View style={{ width: "60%", marginHorizontal: "auto" }}>
-                    <Text style={styles.txtHighlight}>
-                        The best grain, the finest roas, the most powerful
-                        flavor.
-                    </Text>
-                </View>
-
-                <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Home')} style={styles.button}>
+                <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('LoginPage')} style={styles.button}>
                     <Text style={{ fontSize: 20, color : "#fff", fontWeight : "bold" }}>Get started</Text>
                 </TouchableOpacity>
             </View>

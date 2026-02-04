@@ -1,6 +1,8 @@
+import { doctor } from "@/app/inventory/images";
 import { NavigationProp } from "@react-navigation/native";
 import React, { useEffect, useRef, useState } from "react";
 import {
+    Image,
     ScrollView,
     StatusBar,
     StyleSheet,
@@ -73,10 +75,7 @@ const LoginPage: React.FC<props> = ({ navigation }) => {
             <View style={styles.containerForm}>
                 <View style={styles.headLogin}>
                     <Text style={styles.headLoginText1}>Halaman Login</Text>
-                    <Text style={styles.headLoginText2}>
-                        Restaurant Grandian Hotel
-                    </Text>
-                    <Text style={styles.garisHead}></Text>
+                    <Image style={{height: 250, width: 250}} source={doctor} />
                 </View>
                 <Text style={styles.textLabel}>Email</Text>
                 <TextInput
@@ -125,7 +124,7 @@ const LoginPage: React.FC<props> = ({ navigation }) => {
 const styles = StyleSheet.create({
     containerForm: {
         paddingHorizontal: 15,
-        paddingTop: 150,
+        paddingTop: 80,
     },
     headLogin: {
         alignItems: "center",
@@ -135,19 +134,15 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: "900",
         marginBottom: 10,
-        color: "#1E5128",
+        color: "#a5aaaa",
+        alignSelf: "flex-start"
     },
     headLoginText2: {
         fontSize: 20,
         fontWeight: "light",
     },
-    garisHead: {
-        borderBottomWidth: 3,
-        width: "70%",
-        marginTop: -10,
-    },
     button: {
-        backgroundColor: "#1E5128",
+        backgroundColor: "#2171c6",
         width: "80%",
         paddingVertical: 15,
         alignItems: "center",

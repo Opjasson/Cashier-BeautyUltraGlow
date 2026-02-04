@@ -4,6 +4,7 @@ import coffe from "./coffe.png"
 import photo from "./photo.png"
 import hotel from "./hotel.png"
 import mesinKasir from "./kasirmesin.png"
+import doctor from "./doctor.png"
 
 export {
     background,
@@ -11,5 +12,6 @@ export {
     coffe,
     photo,
     hotel,
-    mesinKasir
+    mesinKasir,
+    doctor
 }
