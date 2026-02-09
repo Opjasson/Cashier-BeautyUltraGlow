@@ -5,6 +5,7 @@ import photo from "./photo.png"
 import hotel from "./hotel.png"
 import mesinKasir from "./kasirmesin.png"
 import doctor from "./doctor.png"
+import system from "./Frame.png"
 
 export {
     background,
@@ -13,5 +14,6 @@ export {
     photo,
     hotel,
     mesinKasir,
-    doctor
+    doctor,
+    system,
 }

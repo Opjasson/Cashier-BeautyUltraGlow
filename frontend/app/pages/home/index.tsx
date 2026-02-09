@@ -1,18 +1,14 @@
-import { coffe, photo } from "../../inventory/images";
-import {
-    Location,
-    Notification,
-    Search,
-    Filter,
-    Cup,
-    Cup2,
-    Heart,
-    Add,
-    HeartOff,
-} from "../../inventory/icons";
+import { DrawerContent } from "@/app/components";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { NavigationProp, useFocusEffect } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
     Alert,
+    BackHandler,
     Image,
     ScrollView,
     StatusBar,
@@ -21,15 +17,9 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import { NavigationProp, RouteProp } from "@react-navigation/native";
-import { DrawerContent } from "@/app/components";
-import MenuDrawer from "react-native-side-drawer";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { SafeAreaView } from "react-native-safe-area-context";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import MenuDrawer from "react-native-side-drawer";
+import { Add, Filter, Location, Search } from "../../inventory/icons";
 
 interface props {
     navigation: NavigationProp<any, any>;
@@ -65,10 +55,35 @@ const Home: React.FC<props> = ({ navigation }) => {
         }[]
     >([]);
 
+ // Handle jika user klik tombol kembali handphone
+    useFocusEffect(
+        React.useCallback(() => {
+            const onBackPress = () => {
+                // kalau mau keluar app:
+                Alert.alert("Keluar", "Yakin mau keluar aplikasi?", [
+                    { text: "Batal", style: "cancel" },
+                    { text: "Ya", onPress: () => BackHandler.exitApp() },
+                ]);
+                return true; // cegah kembali ke login
+            };
+
+            const subscription = BackHandler.addEventListener(
+                "hardwareBackPress",
+                onBackPress,
+            );
+
+            return () => subscription.remove(); // hapus listener dengan cara baru
+        }, []),
+    );
+    // end handle tombol kembali
+
     // Get Data Login --------------------------
     const getUserId = async () => {
-        const response = await fetch("http://192.168.138.220:5000/login");
+        const response = await fetch("http://192.168.63.12:5000/login");
         const data = await response.json();
+        const token = await AsyncStorage.getAllKeys();
+        console.log("TOKENALL",token);
+        
         setIdLogin(Object.values(data)[0]?.id);
         setId(Object.values(data)[0]?.userId);
     };
@@ -78,7 +93,7 @@ const Home: React.FC<props> = ({ navigation }) => {
     }, []);
 
     const getAkunLoggin = async () => {
-        const response = await fetch(`http://192.168.138.220:5000/user/${id}`);
+        const response = await fetch(`http://192.168.63.12:5000/user/${id}`);
         const user = await response.json();
         // console.log("login",user);
         setUser(user.role);
@@ -86,7 +101,7 @@ const Home: React.FC<props> = ({ navigation }) => {
     };
 
     const logOut = async () => {
-        await fetch(`http://192.168.138.220:5000/login/${idLogin}`, {
+        await fetch(`http://192.168.63.12:5000/login/${idLogin}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -99,7 +114,7 @@ const Home: React.FC<props> = ({ navigation }) => {
     // ------------------------
 
     const getProducts = async () => {
-        const response = await fetch("http://192.168.138.220:5000/product");
+        const response = await fetch("http://192.168.63.12:5000/product");
         const data = await response.json();
         setProducts(data);
         // console.log(data);
@@ -124,7 +139,7 @@ const Home: React.FC<props> = ({ navigation }) => {
     };
 
     const createTransaksi = async () => {
-        const response = await fetch("http://192.168.138.220:5000/transaksi", {
+        const response = await fetch("http://192.168.63.12:5000/transaksi", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -138,7 +153,7 @@ const Home: React.FC<props> = ({ navigation }) => {
     };
 
     const getTransaksi = async () => {
-        const response = await fetch("http://192.168.138.220:5000/transaksi");
+        const response = await fetch("http://192.168.63.12:5000/transaksi");
         const transaksiS = await response.json();
         // console.log(transaksiS.response);
         setDataTransaksi(transaksiS.response);
@@ -149,10 +164,10 @@ const Home: React.FC<props> = ({ navigation }) => {
     }, []);
 
     const transaksiNamaPelangganUser = dataTransaksi.filter(
-        (item) => item.namaPelanggan === username
+        (item) => item.namaPelanggan === username,
     );
     const transaksiStatusUser = transaksiNamaPelangganUser.filter(
-        (item) => item.buktiBayar === null && item.cash === null
+        (item) => item.buktiBayar === null && item.cash === null,
     );
 
     const handleDeleteStorage = async () => {
@@ -174,7 +189,7 @@ const Home: React.FC<props> = ({ navigation }) => {
                             onPress: handleDeleteStorage,
                             style: "default",
                         },
-                    ]
+                    ],
                 );
                 console.log(token);
             }
@@ -206,7 +221,8 @@ const Home: React.FC<props> = ({ navigation }) => {
                 backgroundColor: "#FBFBFB",
                 paddingBottom: 20,
                 paddingTop: 10,
-            }}>
+            }}
+        >
             <StatusBar barStyle={"default"} />
             <ScrollView>
                 {/* Top menu */}
@@ -217,7 +233,8 @@ const Home: React.FC<props> = ({ navigation }) => {
                         marginHorizontal: 30,
                         justifyContent: "space-between",
                         alignItems: "center",
-                    }}>
+                    }}
+                >
                     <Ionicons
                         name="menu"
                         size={30}
@@ -226,14 +243,16 @@ const Home: React.FC<props> = ({ navigation }) => {
                     />
 
                     <View
-                        style={{ flexDirection: "row", alignItems: "center" }}>
+                        style={{ flexDirection: "row", alignItems: "center" }}
+                    >
                         <Image source={Location} />
                         <Text
                             style={{
                                 fontWeight: "500",
                                 fontSize: 12,
                                 marginLeft: 5,
-                            }}>
+                            }}
+                        >
                             Tegal, Indonesia
                         </Text>
                     </View>
@@ -258,14 +277,16 @@ const Home: React.FC<props> = ({ navigation }) => {
                         borderRadius: 30,
                         paddingHorizontal: 20,
                         marginTop: 20,
-                    }}>
+                    }}
+                >
                     <View
                         style={{
                             flexDirection: "row",
                             alignItems: "center",
                             gap: 2,
                             width: "100%",
-                        }}>
+                        }}
+                    >
                         <Image source={Search} />
                         <TextInput
                             placeholder="Search..."
@@ -302,7 +323,8 @@ const Home: React.FC<props> = ({ navigation }) => {
                                 borderRadius: 30,
                                 gap: 5,
                                 marginRight: 10,
-                            }}>
+                            }}
+                        >
                             <Ionicons
                                 name="pizza-outline"
                                 size={24}
@@ -314,7 +336,8 @@ const Home: React.FC<props> = ({ navigation }) => {
                                         filter === "makanan"
                                             ? "white"
                                             : "black",
-                                }}>
+                                }}
+                            >
                                 Makanan
                             </Text>
                         </TouchableOpacity>
@@ -339,7 +362,8 @@ const Home: React.FC<props> = ({ navigation }) => {
                                 marginVertical: 5,
                                 elevation: 1.5,
                                 shadowColor: "black",
-                            }}>
+                            }}
+                        >
                             <SimpleLineIcons
                                 name="cup"
                                 size={23}
@@ -351,7 +375,8 @@ const Home: React.FC<props> = ({ navigation }) => {
                                         filter === "minuman"
                                             ? "white"
                                             : "black",
-                                }}>
+                                }}
+                            >
                                 Minuman
                             </Text>
                         </TouchableOpacity>
@@ -382,7 +407,8 @@ const Home: React.FC<props> = ({ navigation }) => {
                             gap: 5,
                             marginRight: 10,
                             width: "40%",
-                        }}>
+                        }}
+                    >
                         <FontAwesome6
                             name="notes-medical"
                             size={24}
@@ -391,7 +417,8 @@ const Home: React.FC<props> = ({ navigation }) => {
                         <Text
                             style={{
                                 color: "white",
-                            }}>
+                            }}
+                        >
                             New Transaksi
                         </Text>
                     </TouchableOpacity>
@@ -399,7 +426,8 @@ const Home: React.FC<props> = ({ navigation }) => {
 
                     <ScrollView
                         horizontal={true}
-                        showsHorizontalScrollIndicator={false}>
+                        showsHorizontalScrollIndicator={false}
+                    >
                         {/* Product */}
                         {search?.length > 0 && searchProduct.length > 0
                             ? searchProduct.map((a, index) => (
@@ -417,11 +445,11 @@ const Home: React.FC<props> = ({ navigation }) => {
                                                                 transaksiStatusUser[0]
                                                                     ?.id,
                                                             idUser: id,
-                                                        }
+                                                        },
                                                     )
                                               : () =>
                                                     alert(
-                                                        "Buat Transaksi Dulu!"
+                                                        "Buat Transaksi Dulu!",
                                                     )
                                       }
                                       activeOpacity={0.7}
@@ -435,7 +463,8 @@ const Home: React.FC<props> = ({ navigation }) => {
                                           marginRight: 8,
                                           margin: 8,
                                           width: 155,
-                                      }}>
+                                      }}
+                                  >
                                       <Image
                                           src={a?.img_product}
                                           style={{
@@ -449,20 +478,23 @@ const Home: React.FC<props> = ({ navigation }) => {
                                               flexDirection: "row",
                                               justifyContent: "space-between",
                                               marginTop: 10,
-                                          }}>
+                                          }}
+                                      >
                                           <View>
                                               <Text
                                                   style={{
                                                       fontWeight: "500",
                                                       fontSize: 14,
-                                                  }}>
+                                                  }}
+                                              >
                                                   {a.nama_product}
                                               </Text>
                                               <Text
                                                   style={{
                                                       marginTop: 5,
                                                       fontSize: 10,
-                                                  }}>
+                                                  }}
+                                              >
                                                   {a.deskripsi.substring(0, 30)}
                                                   ...
                                               </Text>
@@ -474,7 +506,8 @@ const Home: React.FC<props> = ({ navigation }) => {
                                               flexDirection: "row",
                                               alignItems: "center",
                                               justifyContent: "space-between",
-                                          }}>
+                                          }}
+                                      >
                                           <Text>
                                               Rp.
                                               {a.harga_product.toLocaleString()}
@@ -500,11 +533,11 @@ const Home: React.FC<props> = ({ navigation }) => {
                                                                     transaksiStatusUser[0]
                                                                         ?.id,
                                                                 idUser: id,
-                                                            }
+                                                            },
                                                         )
                                                   : () =>
                                                         alert(
-                                                            "Buat Transaksi Dulu!"
+                                                            "Buat Transaksi Dulu!",
                                                         )
                                           }
                                           activeOpacity={0.7}
@@ -518,7 +551,8 @@ const Home: React.FC<props> = ({ navigation }) => {
                                               marginRight: 8,
                                               margin: 8,
                                               width: 155,
-                                          }}>
+                                          }}
+                                      >
                                           <Image
                                               src={item?.img_product}
                                               style={{
@@ -533,23 +567,26 @@ const Home: React.FC<props> = ({ navigation }) => {
                                                   justifyContent:
                                                       "space-between",
                                                   marginTop: 10,
-                                              }}>
+                                              }}
+                                          >
                                               <View>
                                                   <Text
                                                       style={{
                                                           fontWeight: "500",
                                                           fontSize: 14,
-                                                      }}>
+                                                      }}
+                                                  >
                                                       {item.nama_product}
                                                   </Text>
                                                   <Text
                                                       style={{
                                                           marginTop: 5,
                                                           fontSize: 10,
-                                                      }}>
+                                                      }}
+                                                  >
                                                       {item.deskripsi.substring(
                                                           0,
-                                                          30
+                                                          30,
                                                       )}
                                                       ...
                                                   </Text>
@@ -562,7 +599,8 @@ const Home: React.FC<props> = ({ navigation }) => {
                                                   alignItems: "center",
                                                   justifyContent:
                                                       "space-between",
-                                              }}>
+                                              }}
+                                          >
                                               <Text>
                                                   Rp.
                                                   {item.harga_product.toLocaleString()}
@@ -585,7 +623,8 @@ const Home: React.FC<props> = ({ navigation }) => {
                         marginHorizontal: "auto",
                         borderRadius: 10,
                         backgroundColor: "#FAF7F3",
-                    }}>
+                    }}
+                >
                     {/* Product */}
                     <Text style={{ fontWeight: "500", padding: 10 }}>
                         Special Offer
@@ -595,7 +634,8 @@ const Home: React.FC<props> = ({ navigation }) => {
                             flexDirection: "row",
                             flexWrap: "wrap",
                             justifyContent: "center",
-                        }}>
+                        }}
+                    >
                         {products
                             .filter((item, index) => item.promo !== "no")
                             .map((a, index) => (
@@ -612,7 +652,7 @@ const Home: React.FC<props> = ({ navigation }) => {
                                                               transaksiStatusUser[0]
                                                                   ?.id,
                                                           idUser: id,
-                                                      }
+                                                      },
                                                   )
                                             : () =>
                                                   alert("Buat Transaksi Dulu!")
@@ -629,7 +669,8 @@ const Home: React.FC<props> = ({ navigation }) => {
                                         marginRight: 8,
                                         margin: 8,
                                         width: 155,
-                                    }}>
+                                    }}
+                                >
                                     <Image
                                         src={a.img_product}
                                         style={{
@@ -643,20 +684,23 @@ const Home: React.FC<props> = ({ navigation }) => {
                                             flexDirection: "row",
                                             justifyContent: "space-between",
                                             marginTop: 10,
-                                        }}>
+                                        }}
+                                    >
                                         <View>
                                             <Text
                                                 style={{
                                                     fontWeight: "500",
                                                     fontSize: 14,
-                                                }}>
+                                                }}
+                                            >
                                                 {a.nama_product}
                                             </Text>
                                             <Text
                                                 style={{
                                                     marginTop: 5,
                                                     fontSize: 10,
-                                                }}>
+                                                }}
+                                            >
                                                 {a.deskripsi.substring(0, 35)}
                                                 ...
                                             </Text>
@@ -668,7 +712,8 @@ const Home: React.FC<props> = ({ navigation }) => {
                                             flexDirection: "row",
                                             alignItems: "center",
                                             justifyContent: "space-between",
-                                        }}>
+                                        }}
+                                    >
                                         <Text>
                                             Rp{a.harga_product.toLocaleString()}
                                         </Text>
@@ -690,7 +735,8 @@ const Home: React.FC<props> = ({ navigation }) => {
                 drawerPercentage={70}
                 animationTime={250}
                 overlay={true}
-                opacity={0.4}></MenuDrawer>
+                opacity={0.4}
+            ></MenuDrawer>
         </SafeAreaView>
     );
 };

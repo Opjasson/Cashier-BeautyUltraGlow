@@ -1,24 +1,23 @@
-import React, { useEffect, useState, useMemo } from "react";
-import {
-    View,
-    Text,
-    Image,
-    StyleSheet,
-    TouchableOpacity,
-    ScrollView,
-    Button,
-    TextInput,
-    StatusBar,
-} from "react-native";
-import { AntDesign } from "@expo/vector-icons";
-import { GopayLogo } from "@/app/inventory/icons";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { DrawerContent } from "@/app/components";
-import MenuDrawer from "react-native-side-drawer";
-import { NavigationProp } from "@react-navigation/native";
+import { GopayLogo } from "@/app/inventory/icons";
+import { AntDesign } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { NavigationProp } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
+import React, { useEffect, useMemo, useState } from "react";
+import {
+    Image,
+    ScrollView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import MenuDrawer from "react-native-side-drawer";
 
 interface props {
     navigation: NavigationProp<any, any>;
@@ -46,7 +45,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
                     qty: number;
                     productId: number;
                     transaksiId: number;
-                }
+                },
             ];
         }[]
     >([]);
@@ -89,7 +88,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
 
     // get product -----------------------
     const getProducts = async () => {
-        const response = await fetch("http://192.168.138.220:5000/product");
+        const response = await fetch("http://192.168.63.12:5000/product");
         const data = await response.json();
         setProducts(data);
     };
@@ -102,7 +101,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
 
     // Get Data Login --------------------------
     const getUserId = async () => {
-        const response = await fetch("http://192.168.138.220:5000/login");
+        const response = await fetch("http://192.168.63.12:5000/login");
         const data = await response.json();
         setIdLogin(Object.values(data)[0]?.id);
         setId(Object.values(data)[0]?.userId);
@@ -113,7 +112,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
     }, []);
 
     const getAkunLoggin = async () => {
-        const response = await fetch(`http://192.168.138.220:5000/user/${id}`);
+        const response = await fetch(`http://192.168.63.12:5000/user/${id}`);
         const user = await response.json();
         // console.log("login",user);
         setUser(user.role);
@@ -121,7 +120,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
     };
 
     const logOut = async () => {
-        await fetch(`http://192.168.138.220:5000/login/${idLogin}`, {
+        await fetch(`http://192.168.63.12:5000/login/${idLogin}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -136,9 +135,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
 
     useEffect(() => {
         const getTransaksi = async () => {
-            const response = await fetch(
-                "http://192.168.138.220:5000/transaksi"
-            );
+            const response = await fetch("http://192.168.63.12:5000/transaksi");
             const transaksiS = await response.json();
             setDataTransaksi(transaksiS.response);
             setLoading(false);
@@ -150,12 +147,11 @@ const Cart: React.FC<props> = ({ navigation }) => {
         if (dataTransaksi.length === 0) return;
 
         const transaksiNamaPelangganUser = dataTransaksi.filter(
-            (item) => item.namaPelanggan === username
+            (item) => item.namaPelanggan === username,
         );
         const transaksiStatusUser = transaksiNamaPelangganUser.filter(
-            (item) => item.buktiBayar === null && item.cash === null
+            (item) => item.buktiBayar === null && item.cash === null,
         );
-        
 
         if (transaksiStatusUser.length === 0) return;
 
@@ -174,7 +170,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
                     harga: product?.harga_product,
                     qty: item.qty,
                 };
-            }
+            },
         );
 
         setDataShow(hasilKeranjang || []);
@@ -200,7 +196,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
     const totalHarga = useMemo(() => {
         return dataShow.reduce(
             (total, item) => total + item.harga * item.qty,
-            0
+            0,
         );
     }, [dataShow]);
 
@@ -208,7 +204,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
 
     // Handle delete cart ---------------------
     const handleDeleteCart = async (cartId: number) => {
-        await fetch(`http://192.168.138.220:5000/cart/${cartId}`, {
+        await fetch(`http://192.168.63.12:5000/cart/${cartId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -269,7 +265,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
-                }
+                },
             );
 
             const json = await res.json();
@@ -287,7 +283,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
         if ((dataShow.length > 0 && imgSend?.length > 0) || cash > 0) {
             try {
                 dataShow.forEach(async (item: any) => {
-                    await fetch(`http://192.168.138.220:5000/cart/${item.id}`, {
+                    await fetch(`http://192.168.63.12:5000/cart/${item.id}`, {
                         method: "PATCH",
                         headers: {
                             "Content-Type": "application/json",
@@ -299,7 +295,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
                 });
 
                 await fetch(
-                    `http://192.168.138.220:5000/transaksi/${idTransaksi}`,
+                    `http://192.168.63.12:5000/transaksi/${idTransaksi}`,
                     {
                         method: "PATCH",
                         headers: {
@@ -311,7 +307,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
                             catatanTambahan: catatan,
                             cash: cash,
                         }),
-                    }
+                    },
                 );
                 alert("Pesanan Sedang Diproses :)");
                 navigation.navigate("Home");
@@ -348,7 +344,8 @@ const Cart: React.FC<props> = ({ navigation }) => {
                     flex: 1,
                     backgroundColor: "#FBFBFB",
                     paddingBottom: 20,
-                }}>
+                }}
+            >
                 <StatusBar barStyle={"default"} />
                 <View
                     style={{
@@ -357,7 +354,8 @@ const Cart: React.FC<props> = ({ navigation }) => {
                         gap: 10,
                         alignItems: "center",
                         paddingTop: 10,
-                    }}>
+                    }}
+                >
                     <Ionicons
                         name="menu"
                         size={30}
@@ -392,7 +390,8 @@ const Cart: React.FC<props> = ({ navigation }) => {
 
                                 <TouchableOpacity
                                     style={styles.plusButton}
-                                    onPress={() => ubahQty(item.id, -1)}>
+                                    onPress={() => ubahQty(item.id, -1)}
+                                >
                                     <AntDesign
                                         name="minus"
                                         size={18}
@@ -402,7 +401,8 @@ const Cart: React.FC<props> = ({ navigation }) => {
 
                                 <TouchableOpacity
                                     style={styles.plusButton}
-                                    onPress={() => ubahQty(item.id, 1)}>
+                                    onPress={() => ubahQty(item.id, 1)}
+                                >
                                     <AntDesign
                                         name="plus"
                                         size={18}
@@ -411,7 +411,8 @@ const Cart: React.FC<props> = ({ navigation }) => {
                                 </TouchableOpacity>
 
                                 <TouchableOpacity
-                                    onPress={() => handleDeleteCart(item.id)}>
+                                    onPress={() => handleDeleteCart(item.id)}
+                                >
                                     <FontAwesome
                                         name="trash"
                                         size={24}
@@ -462,7 +463,8 @@ const Cart: React.FC<props> = ({ navigation }) => {
 
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={() => pickImage()}>
+                    onPress={() => pickImage()}
+                >
                     <Ionicons name="camera-outline" size={24} color="black" />
                     <Text style={{ color: "black" }}>Bukti Pembayaran</Text>
                 </TouchableOpacity>
@@ -470,7 +472,8 @@ const Cart: React.FC<props> = ({ navigation }) => {
                 {/* Buy Button */}
                 <TouchableOpacity
                     style={styles.buyButton}
-                    onPress={() => buyHandle()}>
+                    onPress={() => buyHandle()}
+                >
                     <Text style={styles.buyText}>Buy</Text>
                 </TouchableOpacity>
                 <MenuDrawer
@@ -480,7 +483,8 @@ const Cart: React.FC<props> = ({ navigation }) => {
                     drawerPercentage={70}
                     animationTime={250}
                     overlay={true}
-                    opacity={0.4}></MenuDrawer>
+                    opacity={0.4}
+                ></MenuDrawer>
             </ScrollView>
         </SafeAreaView>
     );

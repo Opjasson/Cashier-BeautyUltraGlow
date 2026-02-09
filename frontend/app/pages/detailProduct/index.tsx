@@ -1,14 +1,14 @@
+import { AntDesign } from "@expo/vector-icons";
+import { NavigationProp, RouteProp } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
-    View,
-    Text,
     Image,
-    TouchableOpacity,
-    StyleSheet,
     ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
-import { AntDesign, Entypo, FontAwesome } from "@expo/vector-icons";
-import { NavigationProp, RouteProp } from "@react-navigation/native";
 
 interface props {
     navigation: NavigationProp<any, any>;
@@ -38,7 +38,7 @@ const DetailProduct: React.FC<props> = ({ navigation, route }) => {
                     qty: number;
                     productId: number;
                     transaksiId: number;
-                }
+                },
             ];
         }[]
     >([]);
@@ -71,7 +71,7 @@ const DetailProduct: React.FC<props> = ({ navigation, route }) => {
 
     // get product -----------------------
     const getProducts = async () => {
-        const response = await fetch("http://192.168.138.220:5000/product");
+        const response = await fetch("http://192.168.63.12:5000/product");
         const data = await response.json();
         setProducts(data);
     };
@@ -84,7 +84,7 @@ const DetailProduct: React.FC<props> = ({ navigation, route }) => {
 
     // Get Data Login --------------------------
     const getUserId = async () => {
-        const response = await fetch("http://192.168.138.220:5000/login");
+        const response = await fetch("http://192.168.63.12:5000/login");
         const data = await response.json();
         setIdLogin(Object.values(data)[0]?.id);
         setId(Object.values(data)[0]?.userId);
@@ -95,7 +95,7 @@ const DetailProduct: React.FC<props> = ({ navigation, route }) => {
     }, []);
 
     const getAkunLoggin = async () => {
-        const response = await fetch(`http://192.168.138.220:5000/user/${id}`);
+        const response = await fetch(`http://192.168.63.12:5000/user/${id}`);
         const user = await response.json();
         // console.log("login",user);
         setUser(user.role);
@@ -109,9 +109,7 @@ const DetailProduct: React.FC<props> = ({ navigation, route }) => {
 
     useEffect(() => {
         const getTransaksi = async () => {
-            const response = await fetch(
-                "http://192.168.138.220:5000/transaksi"
-            );
+            const response = await fetch("http://192.168.63.12:5000/transaksi");
             const transaksiS = await response.json();
             setDataTransaksi(transaksiS.response);
             setLoading(false);
@@ -123,10 +121,10 @@ const DetailProduct: React.FC<props> = ({ navigation, route }) => {
         if (dataTransaksi.length === 0) return;
 
         const transaksiNamaPelangganUser = dataTransaksi.filter(
-            (item) => item.namaPelanggan === username
+            (item) => item.namaPelanggan === username,
         );
         const transaksiStatusUser = transaksiNamaPelangganUser.filter(
-            (item) => item.buktiBayar === null && item.cash === null
+            (item) => item.buktiBayar === null && item.cash === null,
         );
 
         if (transaksiStatusUser.length === 0) return;
@@ -147,7 +145,7 @@ const DetailProduct: React.FC<props> = ({ navigation, route }) => {
                     qty: item.qty,
                     productId: item.productId,
                 };
-            }
+            },
         );
 
         setDataShow(hasilKeranjang || []);
@@ -165,7 +163,7 @@ const DetailProduct: React.FC<props> = ({ navigation, route }) => {
             navigation.navigate("Cart");
         } else {
             try {
-                await fetch(`http://192.168.138.220:5000/cart`, {
+                await fetch(`http://192.168.63.12:5000/cart`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -192,7 +190,8 @@ const DetailProduct: React.FC<props> = ({ navigation, route }) => {
                 <Image src={sendData.img_product} style={styles.image} />
                 <TouchableOpacity
                     style={styles.backButton}
-                    onPress={() => navigation.navigate("Home")}>
+                    onPress={() => navigation.navigate("Home")}
+                >
                     <AntDesign name="arrowleft" size={24} color="#fff" />
                 </TouchableOpacity>
             </View>
@@ -216,7 +215,8 @@ const DetailProduct: React.FC<props> = ({ navigation, route }) => {
                 <View style={styles.cartRow}>
                     <TouchableOpacity
                         style={styles.cartButton}
-                        onPress={addCart}>
+                        onPress={addCart}
+                    >
                         <Text style={styles.cartText}>Add to cart</Text>
                     </TouchableOpacity>
                     <Text style={styles.price}>

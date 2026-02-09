@@ -1,4 +1,7 @@
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { Picker } from "@react-native-picker/picker";
 import { NavigationProp, RouteProp } from "@react-navigation/native";
+import * as ImagePicker from "expo-image-picker";
 import React, { useEffect, useState } from "react";
 import {
     Image,
@@ -9,9 +12,6 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import * as ImagePicker from "expo-image-picker";
-import Ionicons from "@expo/vector-icons/Ionicons";
 
 interface props {
     navigation: NavigationProp<any, any>;
@@ -81,7 +81,7 @@ const TambahProduct: React.FC<props> = ({ navigation, route }) => {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
-                }
+                },
             );
 
             const json = await res.json();
@@ -97,7 +97,7 @@ const TambahProduct: React.FC<props> = ({ navigation, route }) => {
     // Handle Update Product -----------
     const handleUpdateProduct = async () => {
         try {
-            await fetch(`http://192.168.138.220:5000/product`, {
+            await fetch(`http://192.168.63.12:5000/product`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -161,9 +161,11 @@ const TambahProduct: React.FC<props> = ({ navigation, route }) => {
                         borderWidth: 1,
                         marginBottom: 5,
                         borderRadius: 5,
-                    }}>
+                    }}
+                >
                     <Picker
-                        onValueChange={(value, index) => setKategori(value)}>
+                        onValueChange={(value, index) => setKategori(value)}
+                    >
                         <Picker.Item
                             value={"undefined"}
                             label="Pilih Ketegori"
@@ -179,7 +181,8 @@ const TambahProduct: React.FC<props> = ({ navigation, route }) => {
                         borderWidth: 1,
                         marginBottom: 5,
                         borderRadius: 5,
-                    }}>
+                    }}
+                >
                     <Picker onValueChange={(value, index) => setPromo(value)}>
                         <Picker.Item
                             value={"undefined"}
@@ -207,7 +210,8 @@ const TambahProduct: React.FC<props> = ({ navigation, route }) => {
 
                 <TouchableOpacity
                     style={styles.button2}
-                    onPress={() => pickImage()}>
+                    onPress={() => pickImage()}
+                >
                     <Ionicons name="camera-outline" size={24} color="black" />
                     <Text style={{ color: "black" }}>Pilih Gambar</Text>
                 </TouchableOpacity>
@@ -216,7 +220,8 @@ const TambahProduct: React.FC<props> = ({ navigation, route }) => {
 
             <TouchableOpacity
                 style={styles.button}
-                onPress={handleUpdateProduct}>
+                onPress={handleUpdateProduct}
+            >
                 <Text style={{ color: "white" }}>Kirim</Text>
             </TouchableOpacity>
         </ScrollView>

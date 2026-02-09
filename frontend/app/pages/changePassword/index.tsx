@@ -26,7 +26,7 @@ const ChangePass: React.FC<props> = ({ navigation, route }) => {
     const handleChange = async () => {
         if (password && confPassword) {
             const response = await fetch(
-                `http://192.168.138.220:5000/user/${user.id}`,
+                `http://192.168.63.12:5000/user/${user.id}`,
                 {
                     method: "PATCH",
                     headers: {
@@ -38,7 +38,7 @@ const ChangePass: React.FC<props> = ({ navigation, route }) => {
                         password: password,
                         confPassword: confPassword,
                     }),
-                }
+                },
             );
             const json = await response.json();
             if (json.msg === "Password dan Confirm Password tidak cocok") {

@@ -1,7 +1,6 @@
 import { NavigationProp, RouteProp } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-    Image,
     ScrollView,
     StyleSheet,
     Text,
@@ -9,7 +8,6 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
 
 interface props {
     navigation: NavigationProp<any, any>;
@@ -31,7 +29,7 @@ const UbahUser: React.FC<props> = ({ navigation, route }) => {
     const handleUbah = async (id: number) => {
         if (email && password && confPassword) {
             const response = await fetch(
-                `http://192.168.138.220:5000/user/${id}`,
+                `http://192.168.63.12:5000/user/${id}`,
                 {
                     method: "PATCH",
                     headers: {
@@ -43,7 +41,7 @@ const UbahUser: React.FC<props> = ({ navigation, route }) => {
                         password: password,
                         confPassword: confPassword,
                     }),
-                }
+                },
             );
 
             if (JSON.stringify(response.status) === "400") {
@@ -119,7 +117,8 @@ const UbahUser: React.FC<props> = ({ navigation, route }) => {
 
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => handleUbah(index)}>
+                onPress={() => handleUbah(index)}
+            >
                 <Text style={{ color: "white" }}>Kirim</Text>
             </TouchableOpacity>
         </ScrollView>

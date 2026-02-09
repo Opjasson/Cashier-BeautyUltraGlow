@@ -1,4 +1,7 @@
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { Picker } from "@react-native-picker/picker";
 import { NavigationProp, RouteProp } from "@react-navigation/native";
+import * as ImagePicker from "expo-image-picker";
 import React, { useEffect, useState } from "react";
 import {
     Image,
@@ -9,9 +12,6 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import * as ImagePicker from "expo-image-picker";
-import Ionicons from "@expo/vector-icons/Ionicons";
 
 interface props {
     navigation: NavigationProp<any, any>;
@@ -22,16 +22,16 @@ const UbahProduct: React.FC<props> = ({ navigation, route }) => {
     const sendData = route.params?.data;
     const [imgSend, setImgSend] = useState<string>();
     const [nama_product, setNama_Product] = useState<string>(
-        sendData.nama_product
+        sendData.nama_product,
     );
     const [harga_product, setHarga_Product] = useState<number>(
-        sendData.harga_product
+        sendData.harga_product,
     );
     const [id, setId] = useState<number>(sendData.id);
     const [kategori, setKategori] = useState<string>(sendData.kategori);
     const [deskripsi, setDeskripsi] = useState<string>(sendData.deskripsi);
     const [img_product, setImg_Product] = useState<string>(
-        sendData.img_product
+        sendData.img_product,
     );
     const [promo, setPromo] = useState<string>(sendData.promo);
 
@@ -88,7 +88,7 @@ const UbahProduct: React.FC<props> = ({ navigation, route }) => {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
-                }
+                },
             );
 
             const json = await res.json();
@@ -103,7 +103,7 @@ const UbahProduct: React.FC<props> = ({ navigation, route }) => {
 
     // Handle Update Product -----------
     const handleUpdateProduct = async () => {
-        await fetch(`http://192.168.138.220:5000/product/${id}`, {
+        await fetch(`http://192.168.63.12:5000/product/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -167,10 +167,12 @@ const UbahProduct: React.FC<props> = ({ navigation, route }) => {
                         borderWidth: 1,
                         marginBottom: 5,
                         borderRadius: 5,
-                    }}>
+                    }}
+                >
                     <Picker
                         selectedValue={kategori}
-                        onValueChange={(value, index) => setKategori(value)}>
+                        onValueChange={(value, index) => setKategori(value)}
+                    >
                         <Picker.Item
                             value={"undefined"}
                             label="Pilih Ketegori"
@@ -186,10 +188,12 @@ const UbahProduct: React.FC<props> = ({ navigation, route }) => {
                         borderWidth: 1,
                         marginBottom: 5,
                         borderRadius: 5,
-                    }}>
+                    }}
+                >
                     <Picker
                         selectedValue={promo}
-                        onValueChange={(value, index) => setPromo(value)}>
+                        onValueChange={(value, index) => setPromo(value)}
+                    >
                         <Picker.Item
                             value={"undefined"}
                             label="Setting Promo"
@@ -211,7 +215,8 @@ const UbahProduct: React.FC<props> = ({ navigation, route }) => {
                 />
                 <TouchableOpacity
                     style={styles.button2}
-                    onPress={() => pickImage()}>
+                    onPress={() => pickImage()}
+                >
                     <Ionicons name="camera-outline" size={24} color="black" />
                     <Text style={{ color: "black" }}>Pilih Gambar</Text>
                 </TouchableOpacity>
@@ -220,7 +225,8 @@ const UbahProduct: React.FC<props> = ({ navigation, route }) => {
 
             <TouchableOpacity
                 style={styles.button}
-                onPress={handleUpdateProduct}>
+                onPress={handleUpdateProduct}
+            >
                 <Text style={{ color: "white" }}>Ubah</Text>
             </TouchableOpacity>
         </ScrollView>

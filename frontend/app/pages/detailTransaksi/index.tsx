@@ -1,4 +1,13 @@
+import { AntDesign } from "@expo/vector-icons";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationProp, RouteProp } from "@react-navigation/native";
+import * as Device from "expo-device";
+import * as FileSystem from "expo-file-system";
+import * as Notifications from "expo-notifications";
+import { EventSubscription } from "expo-notifications";
+import * as Print from "expo-print";
+import * as Sharing from "expo-sharing";
 import React, { useEffect, useRef, useState } from "react";
 import {
     Image,
@@ -9,15 +18,6 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import * as Print from "expo-print";
-import * as Sharing from "expo-sharing";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import * as FileSystem from "expo-file-system";
-import { AntDesign } from "@expo/vector-icons";
-import * as Notifications from "expo-notifications";
-import * as Device from "expo-device";
-import { EventSubscription } from "expo-notifications";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface props {
     route: RouteProp<any, any>;
@@ -95,7 +95,7 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
 
     const getTransaksiByUUID = async () => {
         const response = await fetch(
-            `http://192.168.138.220:5000/transaksi/${routeUuid}`
+            `http://192.168.63.12:5000/transaksi/${routeUuid}`,
         );
         const dataJson = await response.json();
         setCart(dataJson.keranjangs);
@@ -125,7 +125,7 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
     // handle notif -----------------------------
     useEffect(() => {
         registerForPushNotificationsAsync().then((token) =>
-            setExpoPushToken(token)
+            setExpoPushToken(token),
         );
 
         // listener saat notif masuk
@@ -139,15 +139,15 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
             Notifications.addNotificationResponseReceivedListener(
                 (response) => {
                     console.log("User klik notif:", response);
-                }
+                },
             );
 
         return () => {
             Notifications.removeNotificationSubscription(
-                notificationListener.current
+                notificationListener.current,
             );
             Notifications.removeNotificationSubscription(
-                responseListener.current
+                responseListener.current,
             );
         };
     }, []);
@@ -166,7 +166,7 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
 
     const getDataBarang = async () => {
         try {
-            const response = await fetch("http://192.168.138.220:5000/product");
+            const response = await fetch("http://192.168.63.12:5000/product");
             const barang = await response.json();
             setBarang(barang);
         } catch (error) {
@@ -183,7 +183,7 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
     }, []);
 
     const deleteTransaksi = async () => {
-        await fetch(`http://192.168.138.220:5000/transaksi/${id}`, {
+        await fetch(`http://192.168.63.12:5000/transaksi/${id}`, {
             method: "DELETE",
         });
         alert("Transaksi Berhasil Dihapus!");
@@ -191,7 +191,7 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
     };
 
     const handleUpdateStatus = async () => {
-        await fetch(`http://192.168.138.220:5000/transaksi/${id}`, {
+        await fetch(`http://192.168.63.12:5000/transaksi/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -228,13 +228,13 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
             <div>Pesanan : ${
                 barang.find((e) => e.id === item.productId)?.nama_product
             }<br>${item.qty} x ${
-                    barang.find((e) => e.id === item.productId)?.harga_product
-                }<span class="right">Rp ${
-                    item.qty *
-                    barang.find((e) => e.id === item.productId)!.harga_product
-                }</span>
+                barang.find((e) => e.id === item.productId)?.harga_product
+            }<span class="right">Rp ${
+                item.qty *
+                barang.find((e) => e.id === item.productId)!.harga_product
+            }</span>
             </div>
-    `
+    `,
             )
             .join("");
         return `
@@ -389,14 +389,16 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
                     gap: 10,
                     flexDirection: "row",
                     marginBottom: 10,
-                }}>
+                }}
+            >
                 <TouchableOpacity
                     onPress={() => handleUpdateStatus()}
                     style={{
                         backgroundColor: "#799EFF",
                         padding: 10,
                         borderRadius: 10,
-                    }}>
+                    }}
+                >
                     <Text>Selesai</Text>
                 </TouchableOpacity>
 
@@ -407,7 +409,8 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
                         padding: 10,
                         borderRadius: 10,
                         paddingHorizontal: 13,
-                    }}>
+                    }}
+                >
                     <Text>Delete</Text>
                 </TouchableOpacity>
 
@@ -419,7 +422,8 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
                         borderRadius: 10,
                         // paddingHorizontal: 13,
                         flexDirection: "row",
-                    }}>
+                    }}
+                >
                     <FontAwesome5 name="print" size={24} color="black" />
                     <Text>Cetak</Text>
                 </TouchableOpacity>

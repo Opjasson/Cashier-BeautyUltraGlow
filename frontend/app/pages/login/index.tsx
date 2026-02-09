@@ -1,6 +1,7 @@
 import { doctor } from "@/app/inventory/images";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationProp } from "@react-navigation/native";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Image,
     ScrollView,
@@ -25,7 +26,7 @@ const LoginPage: React.FC<props> = ({ navigation }) => {
 
     const getUserId = async () => {
         try {
-            const response = await fetch("http://192.168.138.220:5000/login");
+            const response = await fetch("http://192.168.63.12:5000/login");
             const datas = await response.json();
             setData(datas); // update state
         } catch (error) {
@@ -47,7 +48,7 @@ const LoginPage: React.FC<props> = ({ navigation }) => {
 
     const handleLogin = async () => {
         if (email && password) {
-            const response = await fetch("http://192.168.138.220:5000/login", {
+            const response = await fetch("http://192.168.63.12:5000/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -58,6 +59,8 @@ const LoginPage: React.FC<props> = ({ navigation }) => {
                 }),
             });
             const json = await response.json();
+            console.log(json.response.id);
+            
 
             if (JSON.stringify(response.status) === "401") {
                 setError("Email atau password salah!");
@@ -75,7 +78,10 @@ const LoginPage: React.FC<props> = ({ navigation }) => {
             <View style={styles.containerForm}>
                 <View style={styles.headLogin}>
                     <Text style={styles.headLoginText1}>Halaman Login</Text>
-                    <Image style={{height: 250, width: 250}} source={doctor} />
+                    <Image
+                        style={{ height: 250, width: 250 }}
+                        source={doctor}
+                    />
                 </View>
                 <Text style={styles.textLabel}>Email</Text>
                 <TextInput
@@ -114,7 +120,8 @@ const LoginPage: React.FC<props> = ({ navigation }) => {
 
             <TouchableOpacity
                 style={styles.buatAkun}
-                onPress={() => navigation.navigate("CekEmail")}>
+                onPress={() => navigation.navigate("CekEmail")}
+            >
                 <Text>Lupa password akun.</Text>
             </TouchableOpacity>
         </ScrollView>
@@ -135,7 +142,7 @@ const styles = StyleSheet.create({
         fontWeight: "900",
         marginBottom: 10,
         color: "#a5aaaa",
-        alignSelf: "flex-start"
+        alignSelf: "flex-start",
     },
     headLoginText2: {
         fontSize: 20,

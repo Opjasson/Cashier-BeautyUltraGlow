@@ -1,6 +1,8 @@
+import { system } from "@/app/inventory/images";
 import { NavigationProp } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
+    Image,
     ScrollView,
     StatusBar,
     StyleSheet,
@@ -21,7 +23,7 @@ const CekEmail: React.FC<props> = ({ navigation }) => {
     const handleCek = async () => {
         if (email) {
             const response = await fetch(
-                "http://192.168.138.220:5000/forgotPass",
+                "http://192.168.63.12:5000/forgotPass",
                 {
                     method: "POST",
                     headers: {
@@ -30,7 +32,7 @@ const CekEmail: React.FC<props> = ({ navigation }) => {
                     body: JSON.stringify({
                         email: email,
                     }),
-                }
+                },
             );
             const json = await response.json();
             // console.log(json);
@@ -58,11 +60,15 @@ const CekEmail: React.FC<props> = ({ navigation }) => {
             <StatusBar barStyle={"light-content"} backgroundColor={"#1F1F1F"} />
             <View style={styles.containerForm}>
                 <View style={styles.headLogin}>
-                    <Text style={styles.headLoginText1}>
-                        Cek Email Anda Dahulu
-                    </Text>
+                    <View style={styles.headLogin}>
+                        <Text style={styles.headLoginText1}>Cek Email User</Text>
+                        <Image
+                            style={{ height: 180, width: 180 }}
+                            source={system}
+                        />
+                    </View>
                     <Text style={styles.headLoginText2}>
-                        Grandian Hotel Brebes Restaurant
+                        Klinik Kecantikan Ultra Glow
                     </Text>
                     <Text style={styles.garisHead}></Text>
                 </View>
@@ -104,19 +110,21 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: "900",
         marginBottom: 10,
-        color: "#1E5128",
+        color: "#2171c6",
     },
     headLoginText2: {
         fontSize: 20,
         fontWeight: "light",
+        color: "#2171c6"
     },
     garisHead: {
         borderBottomWidth: 3,
         width: "70%",
         marginTop: -10,
+        borderColor: "#2171c6"
     },
     button: {
-        backgroundColor: "#1E5128",
+        backgroundColor: "#2171c6",
         width: "80%",
         paddingVertical: 15,
         alignItems: "center",

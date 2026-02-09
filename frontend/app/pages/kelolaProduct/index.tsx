@@ -1,21 +1,19 @@
-import React, { useEffect, useRef, useState } from "react";
+import { DrawerContent } from "@/app/components";
+import Feather from "@expo/vector-icons/Feather";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { NavigationProp } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
 import {
     Image,
-    Platform,
     ScrollView,
     StyleSheet,
     Text,
-    TextInput,
     TouchableOpacity,
     View,
 } from "react-native";
-import { DrawerContent } from "@/app/components";
-import MenuDrawer from "react-native-side-drawer";
-import { NavigationProp } from "@react-navigation/native";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import Feather from "@expo/vector-icons/Feather";
 import { SafeAreaView } from "react-native-safe-area-context";
+import MenuDrawer from "react-native-side-drawer";
 
 interface props {
     navigation: NavigationProp<any, any>;
@@ -39,7 +37,7 @@ const KelolaProduct: React.FC<props> = ({ navigation }) => {
 
     // Get Data Login --------------------------
     const getUserId = async () => {
-        const response = await fetch("http://192.168.138.220:5000/login");
+        const response = await fetch("http://192.168.63.12:5000/login");
         const data = await response.json();
         setIdLogin(Object.values(data)[0]?.id);
     };
@@ -49,7 +47,7 @@ const KelolaProduct: React.FC<props> = ({ navigation }) => {
     }, []);
 
     const logOut = async () => {
-        await fetch(`http://192.168.138.220:5000/login/${idLogin}`, {
+        await fetch(`http://192.168.63.12:5000/login/${idLogin}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -59,7 +57,7 @@ const KelolaProduct: React.FC<props> = ({ navigation }) => {
     };
 
     const getProducts = async () => {
-        const response = await fetch("http://192.168.138.220:5000/product");
+        const response = await fetch("http://192.168.63.12:5000/product");
         const data = await response.json();
         setProducts(data);
         // console.log(data);
@@ -70,7 +68,7 @@ const KelolaProduct: React.FC<props> = ({ navigation }) => {
     }, []);
 
     const handleDeleteProduct = async (productId: number) => {
-        await fetch(`http://192.168.138.220:5000/product/${productId}`, {
+        await fetch(`http://192.168.63.12:5000/product/${productId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -112,7 +110,8 @@ const KelolaProduct: React.FC<props> = ({ navigation }) => {
                     marginHorizontal: 30,
                     gap: 10,
                     alignItems: "center",
-                }}>
+                }}
+            >
                 <Ionicons
                     name="menu"
                     size={30}
@@ -138,21 +137,24 @@ const KelolaProduct: React.FC<props> = ({ navigation }) => {
                     marginRight: 10,
                 }}
                 // onPress={() => navigation.navigate("TambahProduct")}
-                onPress={() => handleNotif()}>
+                onPress={() => handleNotif()}
+            >
                 <Feather name="plus-circle" size={24} color="white" />
                 <Text style={{ color: "white" }}>Tambah Product</Text>
             </TouchableOpacity>
 
             <ScrollView
                 contentContainerStyle={styles.container}
-                showsVerticalScrollIndicator={false}>
+                showsVerticalScrollIndicator={false}
+            >
                 <View
                     style={{
                         flexDirection: "row",
                         flexWrap: "wrap",
                         marginTop: 20,
                         justifyContent: "center",
-                    }}>
+                    }}
+                >
                     {/* Show Products */}
 
                     {products.map((item, index) => (
@@ -173,7 +175,8 @@ const KelolaProduct: React.FC<props> = ({ navigation }) => {
                                 shadowColor: "black",
                                 marginRight: 8,
                                 margin: 8,
-                            }}>
+                            }}
+                        >
                             <Image
                                 src={item.img_product}
                                 style={{
@@ -187,17 +190,20 @@ const KelolaProduct: React.FC<props> = ({ navigation }) => {
                                     flexDirection: "row",
                                     justifyContent: "space-between",
                                     marginTop: 10,
-                                }}>
+                                }}
+                            >
                                 <View>
                                     <Text
                                         style={{
                                             fontWeight: "500",
                                             fontSize: 14,
-                                        }}>
+                                        }}
+                                    >
                                         {item.nama_product}
                                     </Text>
                                     <Text
-                                        style={{ marginTop: 5, fontSize: 10 }}>
+                                        style={{ marginTop: 5, fontSize: 10 }}
+                                    >
                                         {item.kategori_product}
                                     </Text>
                                 </View>
@@ -208,15 +214,15 @@ const KelolaProduct: React.FC<props> = ({ navigation }) => {
                                     flexDirection: "row",
                                     alignItems: "center",
                                     justifyContent: "space-between",
-                                }}>
+                                }}
+                            >
                                 <Text>
                                     Rp. {item.harga_product.toLocaleString()}
                                 </Text>
 
                                 <TouchableOpacity
-                                    onPress={() =>
-                                        handleDeleteProduct(item.id)
-                                    }>
+                                    onPress={() => handleDeleteProduct(item.id)}
+                                >
                                     <MaterialIcons
                                         name="delete"
                                         size={24}
@@ -236,7 +242,8 @@ const KelolaProduct: React.FC<props> = ({ navigation }) => {
                 drawerPercentage={70}
                 animationTime={250}
                 overlay={true}
-                opacity={0.4}></MenuDrawer>
+                opacity={0.4}
+            ></MenuDrawer>
         </SafeAreaView>
     );
 };

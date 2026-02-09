@@ -1,7 +1,6 @@
 import { NavigationProp, RouteProp } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-    Image,
     ScrollView,
     StyleSheet,
     Text,
@@ -9,7 +8,6 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
 
 interface props {
     navigation: NavigationProp<any, any>;
@@ -24,7 +22,7 @@ const TambahUser: React.FC<props> = ({ navigation, route }) => {
 
     // Handle Update Product -----------
     const handleUpdateProduct = async () => {
-        await fetch(`http://192.168.138.220:5000/user`, {
+        await fetch(`http://192.168.63.12:5000/user`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -97,7 +95,8 @@ const TambahUser: React.FC<props> = ({ navigation, route }) => {
 
             <TouchableOpacity
                 style={styles.button}
-                onPress={handleUpdateProduct}>
+                onPress={handleUpdateProduct}
+            >
                 <Text style={{ color: "white" }}>Kirim</Text>
             </TouchableOpacity>
         </ScrollView>

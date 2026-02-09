@@ -1,17 +1,17 @@
+import { DrawerContent } from "@/app/components";
+import { FontAwesome6, Ionicons } from "@expo/vector-icons";
+import { NavigationProp } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
-    Text,
-    View,
-    StyleSheet,
-    StatusBar,
-    TouchableOpacity,
     Alert,
+    StatusBar,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
-import { NavigationProp } from "@react-navigation/native";
-import { FontAwesome6, Ionicons } from "@expo/vector-icons";
-import { DrawerContent } from "@/app/components";
-import MenuDrawer from "react-native-side-drawer";
 import { SafeAreaView } from "react-native-safe-area-context";
+import MenuDrawer from "react-native-side-drawer";
 
 interface props {
     navigation: NavigationProp<any, any>;
@@ -31,7 +31,7 @@ const SetAkun: React.FC<props> = ({ navigation }) => {
 
     // Get Data Login --------------------------
     const getUserId = async () => {
-        const response = await fetch("http://192.168.138.220:5000/login");
+        const response = await fetch("http://192.168.63.12:5000/login");
         const data = await response.json();
         setIdLogin(Object.values(data)[0]?.id);
     };
@@ -41,7 +41,7 @@ const SetAkun: React.FC<props> = ({ navigation }) => {
     }, []);
 
     const logOut = async () => {
-        await fetch(`http://192.168.138.220:5000/login/${idLogin}`, {
+        await fetch(`http://192.168.63.12:5000/login/${idLogin}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -79,14 +79,14 @@ const SetAkun: React.FC<props> = ({ navigation }) => {
 
     // Get data lewat api
     const fetchData = async () => {
-        const response = await fetch("http://192.168.138.220:5000/user");
+        const response = await fetch("http://192.168.63.12:5000/user");
         const data = await response.json();
         setUser(data.data);
     };
 
     // Get data lewat api
     const deleteAkun = async (id: number) => {
-        const response = await fetch(`http://192.168.138.220:5000/user/${id}`, {
+        const response = await fetch(`http://192.168.63.12:5000/user/${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -114,7 +114,8 @@ const SetAkun: React.FC<props> = ({ navigation }) => {
                     gap: 10,
                     alignItems: "center",
                     paddingTop: 10,
-                }}>
+                }}
+            >
                 <Ionicons
                     name="menu"
                     size={30}
@@ -137,7 +138,8 @@ const SetAkun: React.FC<props> = ({ navigation }) => {
                         borderBottomWidth: 2,
                         height: 0,
                         width: "70%",
-                    }}></Text>
+                    }}
+                ></Text>
                 <Text>Mengelola semua akun User</Text>
             </View>
 
@@ -158,12 +160,14 @@ const SetAkun: React.FC<props> = ({ navigation }) => {
                     width: "40%",
                     marginLeft: 10,
                     marginBottom: 10,
-                }}>
+                }}
+            >
                 <FontAwesome6 name="notes-medical" size={24} color="white" />
                 <Text
                     style={{
                         color: "white",
-                    }}>
+                    }}
+                >
                     Tambah User
                 </Text>
             </TouchableOpacity>
@@ -178,7 +182,8 @@ const SetAkun: React.FC<props> = ({ navigation }) => {
                     width: "85%",
                     marginHorizontal: "auto",
                     marginBottom: 10,
-                }}>
+                }}
+            >
                 <Text style={{ fontSize: 18, width: "60%" }}>Email</Text>
                 <Text style={{ fontSize: 18, width: "40%" }}>Aksi</Text>
             </View>
@@ -193,7 +198,8 @@ const SetAkun: React.FC<props> = ({ navigation }) => {
                         width: "85%",
                         marginHorizontal: "auto",
                         marginBottom: 8,
-                    }}>
+                    }}
+                >
                     <Text style={{ fontSize: 18, width: "60%" }}>
                         {item.username}
                     </Text>
@@ -202,14 +208,16 @@ const SetAkun: React.FC<props> = ({ navigation }) => {
                             flexDirection: "row",
                             width: "40%",
                             gap: 8,
-                        }}>
+                        }}
+                    >
                         <TouchableOpacity
                             onPress={() =>
                                 navigation.navigate("UbahUser", {
                                     id: item.id,
                                     data: item,
                                 })
-                            }>
+                            }
+                        >
                             <Text style={{ fontSize: 18, color: "blue" }}>
                                 Ubah
                             </Text>
@@ -230,7 +238,8 @@ const SetAkun: React.FC<props> = ({ navigation }) => {
                 drawerPercentage={70}
                 animationTime={250}
                 overlay={true}
-                opacity={0.4}></MenuDrawer>
+                opacity={0.4}
+            ></MenuDrawer>
         </SafeAreaView>
     );
 };

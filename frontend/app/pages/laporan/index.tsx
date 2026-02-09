@@ -1,24 +1,23 @@
+import { DrawerContent } from "@/app/components";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
+import { NavigationProp } from "@react-navigation/native";
+import * as FileSystem from "expo-file-system";
+import * as Print from "expo-print";
+import * as Sharing from "expo-sharing";
 import React, { useEffect, useState } from "react";
 import {
-    Button,
     ScrollView,
     StyleSheet,
     Text,
     TouchableOpacity,
     View,
 } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { NavigationProp } from "@react-navigation/native";
-import MenuDrawer from "react-native-side-drawer";
-import { DrawerContent } from "@/app/components";
-import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
-import * as Print from "expo-print";
-import * as Sharing from "expo-sharing";
-import * as FileSystem from "expo-file-system";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import AntDesign from "@expo/vector-icons/AntDesign";
 import { SafeAreaView } from "react-native-safe-area-context";
+import MenuDrawer from "react-native-side-drawer";
 
 interface props {
     navigation: NavigationProp<any, any>;
@@ -69,7 +68,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
 
     // Get Data Login --------------------------
     const getUserId = async () => {
-        const response = await fetch("http://192.168.138.220:5000/login");
+        const response = await fetch("http://192.168.63.12:5000/login");
         const data = await response.json();
         setIdLogin(Object.values(data)[0]?.id);
     };
@@ -79,7 +78,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
     }, []);
 
     const logOut = async () => {
-        await fetch(`http://192.168.138.220:5000/login/${idLogin}`, {
+        await fetch(`http://192.168.63.12:5000/login/${idLogin}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -118,7 +117,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
 
     const getCart = async () => {
         try {
-            const response = await fetch("http://192.168.138.220:5000/cart");
+            const response = await fetch("http://192.168.63.12:5000/cart");
             const cat = await response.json();
             setCart(cat.response);
         } catch (error) {
@@ -128,7 +127,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
 
     const getDataBarang = async () => {
         try {
-            const response = await fetch("http://192.168.138.220:5000/product");
+            const response = await fetch("http://192.168.63.12:5000/product");
             const barang = await response.json();
             setBarang(barang);
         } catch (error) {
@@ -147,7 +146,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
     // Penting ----------------
     // Buat map untuk mempermudah pencarian nama berdasarkan barangId
     const barangMap = Object.fromEntries(
-        barang.map((b) => [b.id, b.nama_product])
+        barang.map((b) => [b.id, b.nama_product]),
     );
 
     // Ubah barangId menjadi nama
@@ -159,7 +158,6 @@ const Laporan: React.FC<props> = ({ navigation }) => {
     }));
 
     const grouped1 = new Map();
-
 
     for (const item of cartDenganNama) {
         const key = `${item.createdAt}_${item.nama_barang}`;
@@ -179,7 +177,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
 
     // Buat map nama_barang => data barang
     const barangMap2 = Object.fromEntries(
-        barang.map((b) => [b.nama_product, b])
+        barang.map((b) => [b.nama_product, b]),
     );
 
     // Tambahkan harga ke setiap item transaksi
@@ -220,7 +218,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
             <td>Rp  ${item.harga_jual.toLocaleString()}</td>
             <td>Rp  ${item.harga_jual * item.qty}</td>
           </tr>
-        `
+        `,
             )
             .join("");
         return `
@@ -283,8 +281,8 @@ const Laporan: React.FC<props> = ({ navigation }) => {
   <div class="header">
     <img src="../../inventory/images/hotel.png" alt="Grandian Hotel" height="50"><br>
     <h1>Laporan Pendataan Penjualan ${date.toISOString().split("T")[0]} - ${
-            date2.toISOString().split("T")[0]
-        }</h1>
+        date2.toISOString().split("T")[0]
+    }</h1>
     <p><strong>Grandian Hotel Brebes</strong><br>+62 895-1462-6206</p>
   </div>
 
@@ -360,7 +358,8 @@ const Laporan: React.FC<props> = ({ navigation }) => {
                     gap: 10,
                     alignItems: "center",
                     paddingTop: 10,
-                }}>
+                }}
+            >
                 <Ionicons
                     name="menu"
                     size={30}
@@ -381,7 +380,8 @@ const Laporan: React.FC<props> = ({ navigation }) => {
                             fontSize: 20,
                             fontWeight: "900",
                             textAlign: "center",
-                        }}>
+                        }}
+                    >
                         Grandian Hotel Brebes Restaurant
                     </Text>
                     <Text style={{ borderBottomWidth: 2, height: 2 }}></Text>
@@ -390,7 +390,8 @@ const Laporan: React.FC<props> = ({ navigation }) => {
                             fontSize: 15,
                             fontWeight: "light",
                             textAlign: "center",
-                        }}>
+                        }}
+                    >
                         Filter data berdasarkan tanggal yang dibutuhkan
                     </Text>
                     <View
@@ -400,11 +401,13 @@ const Laporan: React.FC<props> = ({ navigation }) => {
                             alignItems: "center",
                             width: 300,
                             marginLeft: 50,
-                        }}>
+                        }}
+                    >
                         <TouchableOpacity
                             style={styles.buttonDate}
                             // aksi={showDatepicker}
-                            onPress={showDatepicker}>
+                            onPress={showDatepicker}
+                        >
                             <FontAwesome6
                                 name="newspaper"
                                 size={24}
@@ -427,7 +430,8 @@ const Laporan: React.FC<props> = ({ navigation }) => {
                         <TouchableOpacity
                             style={styles.buttonDate}
                             // aksi={showDatepicker}
-                            onPress={showDatepicker2}>
+                            onPress={showDatepicker2}
+                        >
                             <FontAwesome6
                                 name="newspaper"
                                 size={24}
@@ -442,7 +446,8 @@ const Laporan: React.FC<props> = ({ navigation }) => {
                     </View>
                     <TouchableOpacity
                         onPress={handleSavePdf}
-                        style={styles.buttonDate}>
+                        style={styles.buttonDate}
+                    >
                         <FontAwesome5 name="print" size={24} color="white" />
                         <Text style={{ color: "white" }}>Cetak</Text>
                     </TouchableOpacity>
@@ -452,7 +457,8 @@ const Laporan: React.FC<props> = ({ navigation }) => {
                     horizontal
                     style={{
                         backgroundColor: "#FFF",
-                    }}>
+                    }}
+                >
                     <View style={styles.container}>
                         {/* Header */}
                         <View style={[styles.row, styles.header]}>
@@ -464,7 +470,8 @@ const Laporan: React.FC<props> = ({ navigation }) => {
                                     styles.cell,
                                     styles.headerText,
                                     { flex: 2 },
-                                ]}>
+                                ]}
+                            >
                                 Tanggal
                             </Text>
                             <Text style={[styles.cell, styles.headerText]}>
@@ -523,7 +530,8 @@ const Laporan: React.FC<props> = ({ navigation }) => {
                 drawerPercentage={70}
                 animationTime={250}
                 overlay={true}
-                opacity={0.4}></MenuDrawer>
+                opacity={0.4}
+            ></MenuDrawer>
         </SafeAreaView>
     );
 };

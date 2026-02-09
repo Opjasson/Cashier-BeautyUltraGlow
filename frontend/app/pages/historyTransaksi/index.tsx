@@ -1,20 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-    View,
-    Text,
-    FlatList,
-    StyleSheet,
-    TouchableOpacity,
-    ScrollView,
-    StatusBar,
-    Platform,
-} from "react-native";
+import { DrawerContent } from "@/app/components";
 import { AntDesign } from "@expo/vector-icons";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { DrawerContent } from "@/app/components";
-import MenuDrawer from "react-native-side-drawer";
 import { NavigationProp } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import {
+    ScrollView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import MenuDrawer from "react-native-side-drawer";
 
 interface props {
     navigation: NavigationProp<any, any>;
@@ -34,7 +32,7 @@ const HistoryPesanan: React.FC<props> = ({ navigation }) => {
                     productId: number;
                     userId: number;
                     transaksiId: number;
-                }
+                },
             ];
             id: number;
             uuid: string;
@@ -81,7 +79,7 @@ const HistoryPesanan: React.FC<props> = ({ navigation }) => {
 
     // Get Data Login --------------------------
     const getUserId = async () => {
-        const response = await fetch("http://192.168.138.220:5000/login");
+        const response = await fetch("http://192.168.63.12:5000/login");
         const data = await response.json();
         setIdLogin(Object.values(data)[0]?.id);
     };
@@ -91,7 +89,7 @@ const HistoryPesanan: React.FC<props> = ({ navigation }) => {
     }, []);
 
     const logOut = async () => {
-        await fetch(`http://192.168.138.220:5000/login/${idLogin}`, {
+        await fetch(`http://192.168.63.12:5000/login/${idLogin}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -102,9 +100,7 @@ const HistoryPesanan: React.FC<props> = ({ navigation }) => {
 
     const getHistorys = async () => {
         try {
-            const response = await fetch(
-                "http://192.168.138.220:5000/transaksi"
-            );
+            const response = await fetch("http://192.168.63.12:5000/transaksi");
             const history = (await response.json()) as {
                 response: {
                     keranjangs: [
@@ -115,7 +111,7 @@ const HistoryPesanan: React.FC<props> = ({ navigation }) => {
                             productId: number;
                             userId: number;
                             transaksiId: number;
-                        }
+                        },
                     ];
                     id: number;
                     uuid: string;
@@ -138,7 +134,7 @@ const HistoryPesanan: React.FC<props> = ({ navigation }) => {
 
     const getDataBarang = async () => {
         try {
-            const response = await fetch("http://192.168.138.220:5000/product");
+            const response = await fetch("http://192.168.63.12:5000/product");
             const barang = await response.json();
             console.log(barang);
             setBarang(barang);
@@ -165,7 +161,8 @@ const HistoryPesanan: React.FC<props> = ({ navigation }) => {
                     marginHorizontal: 30,
                     gap: 10,
                     alignItems: "center",
-                }}>
+                }}
+            >
                 <Ionicons
                     name="menu"
                     size={30}
@@ -179,7 +176,7 @@ const HistoryPesanan: React.FC<props> = ({ navigation }) => {
             <ScrollView>
                 {[...historyTransaksi]
                     .sort(
-                        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+                        (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
                     )
                     .map((item, index) => (
                         <TouchableOpacity
@@ -189,7 +186,8 @@ const HistoryPesanan: React.FC<props> = ({ navigation }) => {
                                 navigation.navigate("DetailTransaksi", {
                                     uuid: item.uuid,
                                 })
-                            }>
+                            }
+                        >
                             <View style={styles.rowBetween}>
                                 <Text style={styles.date}>
                                     {item.createdAt.split("T")[0]}
@@ -225,7 +223,7 @@ const HistoryPesanan: React.FC<props> = ({ navigation }) => {
                                             {
                                                 barang.find(
                                                     (a) =>
-                                                        a.id === name.productId
+                                                        a.id === name.productId,
                                                 )?.nama_product
                                             }{" "}
                                             x {name.qty}
@@ -254,7 +252,8 @@ const HistoryPesanan: React.FC<props> = ({ navigation }) => {
                 drawerPercentage={70}
                 animationTime={250}
                 overlay={true}
-                opacity={0.4}></MenuDrawer>
+                opacity={0.4}
+            ></MenuDrawer>
         </SafeAreaView>
     );
 };
