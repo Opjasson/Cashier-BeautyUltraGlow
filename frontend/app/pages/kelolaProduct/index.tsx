@@ -136,8 +136,7 @@ const KelolaProduct: React.FC<props> = ({ navigation }) => {
                     gap: 5,
                     marginRight: 10,
                 }}
-                // onPress={() => navigation.navigate("TambahProduct")}
-                onPress={() => handleNotif()}
+                onPress={() => navigation.navigate("TambahProduct")}
             >
                 <Feather name="plus-circle" size={24} color="white" />
                 <Text style={{ color: "white" }}>Tambah Product</Text>
