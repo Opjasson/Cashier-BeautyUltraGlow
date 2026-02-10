@@ -42,74 +42,79 @@ const DrawerContent: React.FC<props> = ({
                     onPress={onPress1}
                     style={{
                         flexDirection: "row",
-                        borderBottomWidth: 2,
+                        backgroundColor: "#ebf4ba",
                         gap: 5,
+                        padding: 6,
+                        borderRadius: 8
                     }}>
-                    <Text style={styles.sidebarMenu}>Cart</Text>
-                    <AntDesign name="shoppingcart" size={27} color="black" />
+                    <Text style={styles.sidebarMenu}>🛒 Cart</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={onPress2}
                     style={{
                         flexDirection: "row",
-                        borderBottomWidth: 2,
+                        backgroundColor: "#ebf4ba",
                         gap: 5,
+                        padding: 6,
+                        borderRadius: 8
                     }}>
-                    <Text style={styles.sidebarMenu}>Home</Text>
-                    <AntDesign name="home" size={27} color="black" />
+                    <Text style={styles.sidebarMenu}>🏠 Home</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={onPress3}
                     style={{
                         flexDirection: "row",
-                        borderBottomWidth: 2,
+                        backgroundColor: "#ebf4ba",
                         gap: 5,
+                        padding: 6,
+                        borderRadius: 8,
                         display: status ? "none" : "flex",
                     }}>
-                    <Text style={styles.sidebarMenu}>History Pesanan</Text>
-                    <Octicons name="history" size={27} color="black" />
+                    <Text style={styles.sidebarMenu}>📊 History Pesanan</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={onPress5}
                     style={{
                         flexDirection: "row",
-                        borderBottomWidth: 2,
+                        backgroundColor: "#ebf4ba",
                         gap: 5,
+                        padding: 6,
+                        borderRadius: 8,
                         display: status ? "none" : "flex",
                     }}>
-                    <Text style={styles.sidebarMenu}>Atur Product</Text>
-                    <Ionicons
-                        name="fast-food-outline"
-                        size={27}
-                        color="black"
-                    />
+                    <Text style={styles.sidebarMenu}>🧰 Atur Product</Text>
+                    
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={onPress6}
                     style={{
                         flexDirection: "row",
-                        borderBottomWidth: 2,
+                        backgroundColor: "#ebf4ba",
                         gap: 5,
+                        padding: 6,
+                        borderRadius: 8,
                         display: status ? "none" : "flex",
                     }}>
-                    <Text style={styles.sidebarMenu}>Laporan</Text>
-                    <FontAwesome5 name="tasks" size={27} color="black" />
+                    <Text style={styles.sidebarMenu}>🗒️ Laporan</Text>
+                
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={onPress7}
                     style={{
                         flexDirection: "row",
-                        borderBottomWidth: 2,
+                        backgroundColor: "#ebf4ba",
                         gap: 5,
+                        padding: 6,
+                        borderRadius: 8,
                         display: status ? "none" : "flex",
                     }}>
-                    <Text style={styles.sidebarMenu}>Kelola User</Text>
-                    <Entypo name="add-user" size={27} color="black" />
+                    <Text style={styles.sidebarMenu}>🙍‍♀️ Kelola User</Text>
+                   
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -124,7 +129,7 @@ const DrawerContent: React.FC<props> = ({
                             backgroundColor: "#FDFFB8",
                             padding: 10,
                         }}>
-                        Logout
+                        🔙 Logout
                     </Text>
                 </TouchableOpacity>
 
@@ -170,7 +175,7 @@ const styles = StyleSheet.create({
     },
     sidebarMenu: {
         fontSize: 20,
-        fontWeight: "800",
+        fontWeight: "400",
     },
     tutupSidebar: {
         flexDirection: "row",
