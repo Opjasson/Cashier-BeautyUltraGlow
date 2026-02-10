@@ -2,7 +2,6 @@ import { DrawerContent } from "@/app/components";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationProp, useFocusEffect } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
@@ -55,7 +54,7 @@ const Home: React.FC<props> = ({ navigation }) => {
         }[]
     >([]);
 
- // Handle jika user klik tombol kembali handphone
+    // Handle jika user klik tombol kembali handphone
     useFocusEffect(
         React.useCallback(() => {
             const onBackPress = () => {
@@ -82,8 +81,8 @@ const Home: React.FC<props> = ({ navigation }) => {
         const response = await fetch("http://192.168.63.12:5000/login");
         const data = await response.json();
         const token = await AsyncStorage.getAllKeys();
-        console.log("TOKENALL",token);
-        
+        console.log("TOKENALL", token);
+
         setIdLogin(Object.values(data)[0]?.id);
         setId(Object.values(data)[0]?.userId);
     };
@@ -220,88 +219,133 @@ const Home: React.FC<props> = ({ navigation }) => {
                 flex: 1,
                 backgroundColor: "#FBFBFB",
                 paddingBottom: 20,
-                paddingTop: 10,
             }}
         >
             <StatusBar barStyle={"default"} />
             <ScrollView>
                 {/* Top menu */}
-                <View
-                    style={{
-                        flexDirection: "row",
-                        // marginTop: 30,
-                        marginHorizontal: 30,
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                    }}
-                >
-                    <Ionicons
-                        name="menu"
-                        size={30}
-                        color="black"
-                        onPress={() => toggleOpen()}
-                    />
-
-                    <View
-                        style={{ flexDirection: "row", alignItems: "center" }}
-                    >
-                        <Image source={Location} />
-                        <Text
-                            style={{
-                                fontWeight: "500",
-                                fontSize: 12,
-                                marginLeft: 5,
-                            }}
-                        >
-                            Tegal, Indonesia
-                        </Text>
-                    </View>
-                    <TouchableOpacity activeOpacity={0.7}>
-                        <FontAwesome name="user" size={24} color="black" />
-                    </TouchableOpacity>
-                </View>
-                {/* End top menu */}
-                <View style={{ marginHorizontal: 30, marginTop: 15 }}>
-                    <Text style={{ fontWeight: "500", fontSize: 14 }}>
-                        Good Morning, {username}
-                    </Text>
-                </View>
-                {/* Search tab */}
-                <View
-                    style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        width: "75%",
-                        backgroundColor: "#1111",
-                        marginHorizontal: "auto",
-                        borderRadius: 30,
-                        paddingHorizontal: 20,
-                        marginTop: 20,
-                    }}
-                >
+                <View style={{ backgroundColor: "#2171c6", paddingVertical: 18, borderBottomLeftRadius: 12, borderBottomRightRadius: 12 }}>
+                    {/* header page */}
                     <View
                         style={{
                             flexDirection: "row",
+                            marginHorizontal: 30,
+                            justifyContent: "space-between",
                             alignItems: "center",
-                            gap: 2,
-                            width: "100%",
                         }}
                     >
-                        <Image source={Search} />
-                        <TextInput
-                            placeholder="Search..."
-                            style={{ width: "100%" }}
-                            onChangeText={(text) => setSearch(text)}
+                        <Ionicons
+                            name="menu"
+                            size={30}
+                            color="white"
+                            onPress={() => toggleOpen()}
                         />
-                    </View>
-                    <View style={{ justifyContent: "center" }}>
-                        <Image source={Filter} />
-                    </View>
-                </View>
-                {/* End Search */}
 
-                {/* Categories */}
-               {/* <View style={{ marginLeft: 25, marginTop: 15 }}>
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    fontWeight: "500",
+                                    fontSize: 12,
+                                    marginLeft: 5,
+                                    color: "white"
+                                }}
+                            >
+                            💌 Kota Tegal, Indonesia
+                            </Text>
+                        </View>
+                        <TouchableOpacity activeOpacity={0.7}>
+                            <FontAwesome name="user" size={24} color="white" />
+                        </TouchableOpacity>
+                    </View>
+                    {/* end header page */}
+
+                    <View style={{ marginHorizontal: 30, marginTop: 15 }}>
+                        <Text style={{ fontWeight: "500", fontSize: 14, color: "white", textAlign: "center" }}>
+                            Good Morning, {username}
+                        </Text>
+                    </View>
+                    {/* Search tab */}
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            width: "90%",
+                            marginHorizontal: "auto",
+                            borderWidth: 1,
+                            borderColor: "#fff",
+                            borderRadius: 8,
+                            paddingHorizontal: 20,
+                            marginTop: 20,
+                        }}
+                    >
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                gap: 2,
+                                width: "100%",
+                            }}
+                        >
+                            <TextInput style={{ fontSize: 20, padding: 0 }}>👩🏼‍⚕️</TextInput>
+                            <TextInput
+                                placeholder="Pencarian ..."
+                                placeholderTextColor={"white"}
+                                style={{ width: "100%", color: "#fff" }}
+                                onChangeText={(text) => setSearch(text)}
+                            />
+                        </View>
+                    </View>
+                    {/* End Search */}
+
+                    {/* button create transaksi */}
+                    <TouchableOpacity
+                        disabled={
+                            transaksiId === 2 || transaksiStatusUser?.length > 0
+                                ? true
+                                : false
+                        }
+                        onPress={createTransaksi}
+                        activeOpacity={0.8}
+                        style={{
+                            justifyContent: "center",
+                            flexDirection: "row",
+                            backgroundColor: "white",
+                            alignItems: "center",
+                            marginHorizontal: "auto",
+                            paddingHorizontal: 10,
+                            paddingVertical: 10,
+                            borderRadius: 30,
+                            gap: 5,
+                            width: "90%",
+                            marginTop: 12
+                        }}
+                    >
+                        <FontAwesome6
+                            name="notes-medical"
+                            size={24}
+                            color="black"
+                        />
+                        <Text
+                            style={{
+                                color: "black",
+                            }}
+                        >
+                            New Transaksi
+                        </Text>
+                    </TouchableOpacity>
+                    {/* end button transaksi */}
+                </View>
+                {/* End top menu */}
+
+                {/* Product */}
+                <View style={{ marginTop: 20, marginLeft: 20 }}>
+                    {/* Categories */}
+                    {/* <View style={{ marginLeft: 25, marginTop: 15 }}>
                     <View style={{ marginBottom: 15 }}>
                         <Text style={{ fontWeight: "500", marginLeft: 5 }}>
                             Categories
@@ -383,46 +427,7 @@ const Home: React.FC<props> = ({ navigation }) => {
                         End menu
                     </View>
                 </View>  */}
-                {/* End Categories */}
-
-                {/* Product */}
-                <View style={{ marginTop: 20, marginLeft: 20 }}>
-                    {/* button create transaksi */}
-                    <TouchableOpacity
-                        disabled={
-                            transaksiId === 2 || transaksiStatusUser?.length > 0
-                                ? true
-                                : false
-                        }
-                        onPress={createTransaksi}
-                        activeOpacity={0.8}
-                        style={{
-                            justifyContent: "center",
-                            flexDirection: "row",
-                            backgroundColor: "blue",
-                            alignItems: "center",
-                            paddingHorizontal: 10,
-                            paddingVertical: 10,
-                            borderRadius: 30,
-                            gap: 5,
-                            marginRight: 10,
-                            width: "40%",
-                        }}
-                    >
-                        <FontAwesome6
-                            name="notes-medical"
-                            size={24}
-                            color="white"
-                        />
-                        <Text
-                            style={{
-                                color: "white",
-                            }}
-                        >
-                            New Transaksi
-                        </Text>
-                    </TouchableOpacity>
-                    {/* end button transaksi */}
+                    {/* End Categories */}
 
                     <ScrollView
                         horizontal={true}
