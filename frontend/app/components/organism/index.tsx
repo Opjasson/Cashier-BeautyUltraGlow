@@ -33,8 +33,8 @@ const DrawerContent: React.FC<props> = ({
     return (
         <SafeAreaView style={styles.animatedBox}>
             <View style={styles.sidebarHead}>
-                <Ionicons name="restaurant" size={28} color="white" />
-                <Text style={styles.sidebarTitle}>Grandian Resto</Text>
+                <Text style={styles.sidebarTitle}>Ultra Glow Clinic</Text>
+                <Text style={{ color: "white", fontSize: 12, borderBottomColor: "white", borderBottomWidth: 2 }}>Jln Raya, Kalimati, Kec. Adiwerna, Kabupaten Tegal, Jawa Tengah</Text>
             </View>
 
             <View style={styles.sidebarMain}>
@@ -151,9 +151,9 @@ const styles = StyleSheet.create({
         // borderWidth : 3
     },
     sidebarHead: {
-        flexDirection: "row",
+        flexDirection: "column",
         gap: 15,
-        backgroundColor: "#D96F32",
+        backgroundColor: "#2171c6",
         padding: 15,
     },
     sidebarTitle: {

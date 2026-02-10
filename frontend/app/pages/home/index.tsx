@@ -221,7 +221,7 @@ const Home: React.FC<props> = ({ navigation }) => {
                 paddingBottom: 20,
             }}
         >
-            <StatusBar barStyle={"default"} />
+            <StatusBar backgroundColor={"#2171c6"} barStyle={"light-content"} />
             <ScrollView>
                 {/* Top menu */}
                 <View style={{ backgroundColor: "#2171c6", paddingVertical: 18, borderBottomLeftRadius: 12, borderBottomRightRadius: 12 }}>
@@ -344,90 +344,6 @@ const Home: React.FC<props> = ({ navigation }) => {
 
                 {/* Product */}
                 <View style={{ marginTop: 20, marginLeft: 20 }}>
-                    {/* Categories */}
-                    {/* <View style={{ marginLeft: 25, marginTop: 15 }}>
-                    <View style={{ marginBottom: 15 }}>
-                        <Text style={{ fontWeight: "500", marginLeft: 5 }}>
-                            Categories
-                        </Text>
-                    </View>
-                    <View style={{ justifyContent: "center" }}>
-                        Menu
-                        <TouchableOpacity
-                            onPress={() => setFilter("makanan")}
-                            activeOpacity={0.8}
-                            style={{
-                                justifyContent: "center",
-                                flexDirection: "row",
-                                backgroundColor:
-                                    filter === "makanan" ? "#2f823a" : "white",
-                                alignItems: "center",
-                                paddingHorizontal: 10,
-                                paddingVertical: 10,
-                                borderRadius: 30,
-                                gap: 5,
-                                marginRight: 10,
-                            }}
-                        >
-                            <Ionicons
-                                name="pizza-outline"
-                                size={24}
-                                color={filter === "makanan" ? "white" : "black"}
-                            />
-                            <Text
-                                style={{
-                                    color:
-                                        filter === "makanan"
-                                            ? "white"
-                                            : "black",
-                                }}
-                            >
-                                Makanan
-                            </Text>
-                        </TouchableOpacity>
-
-                        End Menu
-
-                        Menu
-                        <TouchableOpacity
-                            onPress={() => setFilter("minuman")}
-                            activeOpacity={0.8}
-                            style={{
-                                justifyContent: "center",
-                                flexDirection: "row",
-                                backgroundColor:
-                                    filter === "minuman" ? "#2f823a" : "white",
-                                alignItems: "center",
-                                paddingHorizontal: 10,
-                                paddingVertical: 10,
-                                borderRadius: 30,
-                                gap: 5,
-                                marginRight: 10,
-                                marginVertical: 5,
-                                elevation: 1.5,
-                                shadowColor: "black",
-                            }}
-                        >
-                            <SimpleLineIcons
-                                name="cup"
-                                size={23}
-                                color={filter === "minuman" ? "white" : "black"}
-                            />
-                            <Text
-                                style={{
-                                    color:
-                                        filter === "minuman"
-                                            ? "white"
-                                            : "black",
-                                }}
-                            >
-                                Minuman
-                            </Text>
-                        </TouchableOpacity>
-                        End menu
-                    </View>
-                </View>  */}
-                    {/* End Categories */}
 
                     <ScrollView
                         horizontal={true}
