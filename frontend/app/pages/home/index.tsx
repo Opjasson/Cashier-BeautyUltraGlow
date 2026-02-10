@@ -301,14 +301,14 @@ const Home: React.FC<props> = ({ navigation }) => {
                 {/* End Search */}
 
                 {/* Categories */}
-                <View style={{ marginLeft: 25, marginTop: 15 }}>
+               {/* <View style={{ marginLeft: 25, marginTop: 15 }}>
                     <View style={{ marginBottom: 15 }}>
                         <Text style={{ fontWeight: "500", marginLeft: 5 }}>
                             Categories
                         </Text>
                     </View>
                     <View style={{ justifyContent: "center" }}>
-                        {/* Menu */}
+                        Menu
                         <TouchableOpacity
                             onPress={() => setFilter("makanan")}
                             activeOpacity={0.8}
@@ -342,9 +342,9 @@ const Home: React.FC<props> = ({ navigation }) => {
                             </Text>
                         </TouchableOpacity>
 
-                        {/* End Menu */}
+                        End Menu
 
-                        {/* Menu */}
+                        Menu
                         <TouchableOpacity
                             onPress={() => setFilter("minuman")}
                             activeOpacity={0.8}
@@ -380,9 +380,9 @@ const Home: React.FC<props> = ({ navigation }) => {
                                 Minuman
                             </Text>
                         </TouchableOpacity>
-                        {/* End menu */}
+                        End menu
                     </View>
-                </View>
+                </View>  */}
                 {/* End Categories */}
 
                 {/* Product */}
