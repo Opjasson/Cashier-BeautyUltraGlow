@@ -5,6 +5,7 @@ import * as ImagePicker from "expo-image-picker";
 import React, { useEffect, useState } from "react";
 import {
     Image,
+    Platform,
     ScrollView,
     StyleSheet,
     Text,
@@ -172,8 +173,9 @@ const TambahProduct: React.FC<props> = ({ navigation, route }) => {
                                 value={"undefined"}
                                 label="Pilih Ketegori"
                             />
-                            <Picker.Item value={"makanan"} label="Makanan" />
-                            <Picker.Item value={"minuman"} label="Minuman" />
+                            <Picker.Item value={"spray"} label="Spray" />
+                            <Picker.Item value={"cream"} label="Cream" />
+                            <Picker.Item value={"kombinasi"} label="Kombinasi" />
                         </Picker>
                     </View>
 
