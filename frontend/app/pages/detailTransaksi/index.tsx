@@ -208,28 +208,12 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
             <View style={styles.card}>
                 <View style={styles.rowBetween}>
                     <Text style={styles.date}>{createdAt?.split("T")[0]}</Text>
-                    <Text style={styles.type}>
-                        Status{" "}
-                        {status === null ? (
-                            <AntDesign
-                                name="checkcircleo"
-                                size={16}
-                                color="black"
-                            />
-                        ) : (
-                            <AntDesign
-                                name="checkcircle"
-                                size={16}
-                                color="green"
-                            />
-                        )}
-                    </Text>
                 </View>
                 <View style={styles.titleRow}>
                     <View style={styles.verticalLine} />
                     <View style={styles.content}>
                         <Text style={styles.title}>
-                            Pelanggan : {pelanggan}
+                            Nama Kasir : {pelanggan?.toUpperCase()}
                         </Text>
                         <Text style={styles.location}>Id Pesanan : {uuid}</Text>
 
@@ -260,25 +244,6 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
                                 ? (cash - totalHarga).toLocaleString()
                                 : "-0"}
                         </Text>
-
-                        <Text style={{ marginTop: 7, borderTopWidth: 2 }}>
-                            Catatan Tambahan :
-                        </Text>
-                        <Text style={styles.location}>{catatanTambahan}</Text>
-
-                        <Text style={{ marginTop: 7, borderTopWidth: 2 }}>
-                            Bukti Bayar :
-                        </Text>
-
-                        {buktiBayar?.length > 0 ? (
-                            <Image
-                                resizeMode="cover"
-                                style={styles.img}
-                                src={buktiBayar}
-                            />
-                        ) : (
-                            ""
-                        )}
                     </View>
                 </View>
                 <View style={styles.rowBetween}>
@@ -299,7 +264,7 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
                     marginBottom: 10,
                 }}
             >
-                <TouchableOpacity
+                {/* <TouchableOpacity
                     onPress={() => handleUpdateStatus()}
                     style={{
                         backgroundColor: "#799EFF",
@@ -308,7 +273,7 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
                     }}
                 >
                     <Text>Selesai</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
                 <TouchableOpacity
                     onPress={() => deleteTransaksi()}
