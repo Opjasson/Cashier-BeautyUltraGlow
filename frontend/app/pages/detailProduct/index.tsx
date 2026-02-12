@@ -1,4 +1,4 @@
-import { AntDesign } from "@expo/vector-icons";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { NavigationProp, RouteProp } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
@@ -71,7 +71,7 @@ const DetailProduct: React.FC<props> = ({ navigation, route }) => {
 
     // get product -----------------------
     const getProducts = async () => {
-        const response = await fetch("http://192.168.63.12:5000/product");
+        const response = await fetch("http://192.168.99.12:5000/product");
         const data = await response.json();
         setProducts(data);
     };
@@ -84,7 +84,7 @@ const DetailProduct: React.FC<props> = ({ navigation, route }) => {
 
     // Get Data Login --------------------------
     const getUserId = async () => {
-        const response = await fetch("http://192.168.63.12:5000/login");
+        const response = await fetch("http://192.168.99.12:5000/login");
         const data = await response.json();
         setIdLogin(Object.values(data)[0]?.id);
         setId(Object.values(data)[0]?.userId);
@@ -95,11 +95,11 @@ const DetailProduct: React.FC<props> = ({ navigation, route }) => {
     }, []);
 
     const getAkunLoggin = async () => {
-        const response = await fetch(`http://192.168.63.12:5000/user/${id}`);
+        const response = await fetch(`http://192.168.99.12:5000/user/${id}`);
         const user = await response.json();
         // console.log("login",user);
-        setUser(user.role);
-        setUsername(user.username);
+        setUser(user?.role);
+        setUsername(user?.username);
     };
 
     getAkunLoggin();
@@ -109,7 +109,7 @@ const DetailProduct: React.FC<props> = ({ navigation, route }) => {
 
     useEffect(() => {
         const getTransaksi = async () => {
-            const response = await fetch("http://192.168.63.12:5000/transaksi");
+            const response = await fetch("http://192.168.99.12:5000/transaksi");
             const transaksiS = await response.json();
             setDataTransaksi(transaksiS.response);
             setLoading(false);
@@ -163,7 +163,7 @@ const DetailProduct: React.FC<props> = ({ navigation, route }) => {
             navigation.navigate("Cart");
         } else {
             try {
-                await fetch(`http://192.168.63.12:5000/cart`, {
+                await fetch(`http://192.168.99.12:5000/cart`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -192,7 +192,7 @@ const DetailProduct: React.FC<props> = ({ navigation, route }) => {
                     style={styles.backButton}
                     onPress={() => navigation.navigate("Home")}
                 >
-                    <AntDesign name="arrowleft" size={24} color="#fff" />
+                    <AntDesign name="arrow-left" size={24} color="black" />
                 </TouchableOpacity>
             </View>
 

@@ -88,7 +88,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
 
     // get product -----------------------
     const getProducts = async () => {
-        const response = await fetch("http://192.168.63.12:5000/product");
+        const response = await fetch("http://192.168.99.12:5000/product");
         const data = await response.json();
         setProducts(data);
     };
@@ -101,7 +101,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
 
     // Get Data Login --------------------------
     const getUserId = async () => {
-        const response = await fetch("http://192.168.63.12:5000/login");
+        const response = await fetch("http://192.168.99.12:5000/login");
         const data = await response.json();
         setIdLogin(Object.values(data)[0]?.id);
         setId(Object.values(data)[0]?.userId);
@@ -112,15 +112,15 @@ const Cart: React.FC<props> = ({ navigation }) => {
     }, []);
 
     const getAkunLoggin = async () => {
-        const response = await fetch(`http://192.168.63.12:5000/user/${id}`);
+        const response = await fetch(`http://192.168.99.12:5000/user/${id}`);
         const user = await response.json();
         // console.log("login",user);
-        setUser(user.role);
-        setUsername(user.username);
+        setUser(user?.role);
+        setUsername(user?.username);
     };
 
     const logOut = async () => {
-        await fetch(`http://192.168.63.12:5000/login/${idLogin}`, {
+        await fetch(`http://192.168.99.12:5000/login/${idLogin}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -135,7 +135,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
 
     useEffect(() => {
         const getTransaksi = async () => {
-            const response = await fetch("http://192.168.63.12:5000/transaksi");
+            const response = await fetch("http://192.168.99.12:5000/transaksi");
             const transaksiS = await response.json();
             setDataTransaksi(transaksiS.response);
             setLoading(false);
@@ -204,7 +204,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
 
     // Handle delete cart ---------------------
     const handleDeleteCart = async (cartId: number) => {
-        await fetch(`http://192.168.63.12:5000/cart/${cartId}`, {
+        await fetch(`http://192.168.99.12:5000/cart/${cartId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -215,75 +215,75 @@ const Cart: React.FC<props> = ({ navigation }) => {
     // end handle delete cart -------------------
 
     // handle uplod image --------------------
-    useEffect(() => {
-        (async () => {
-            if (Platform.OS !== "web") {
-                const { status } =
-                    await ImagePicker.requestMediaLibraryPermissionsAsync();
-                if (status !== "granted") {
-                    alert("Permission to access gallery is required!");
-                }
-            }
-        })();
-    }, []);
+    // useEffect(() => {
+    //     (async () => {
+    //         if (Platform.OS !== "web") {
+    //             const { status } =
+    //                 await ImagePicker.requestMediaLibraryPermissionsAsync();
+    //             if (status !== "granted") {
+    //                 alert("Permission to access gallery is required!");
+    //             }
+    //         }
+    //     })();
+    // }, []);
 
-    const pickImage = async () => {
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            quality: 1,
-        });
+    // const pickImage = async () => {
+    //     const result = await ImagePicker.launchImageLibraryAsync({
+    //         mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    //         allowsEditing: true,
+    //         quality: 1,
+    //     });
 
-        if (!result.canceled) {
-            // setImage(result.assets[0].uri);
-            uploadToCloudinary(result.assets[0].uri);
-        }
-    };
+    //     if (!result.canceled) {
+    //         // setImage(result.assets[0].uri);
+    //         uploadToCloudinary(result.assets[0].uri);
+    //     }
+    // };
 
-    const uploadToCloudinary = async (imageUri) => {
-        const data2 = new FormData();
+    // const uploadToCloudinary = async (imageUri) => {
+    //     const data2 = new FormData();
 
-        // Ekstrak file name dan type dari URI
-        const fileName = imageUri.split("/").pop();
-        const fileType = fileName.split(".").pop();
+    //     // Ekstrak file name dan type dari URI
+    //     const fileName = imageUri.split("/").pop();
+    //     const fileType = fileName.split(".").pop();
 
-        data2.append("file", {
-            uri: imageUri,
-            name: fileName,
-            type: `image/${fileType}`,
-        });
+    //     data2.append("file", {
+    //         uri: imageUri,
+    //         name: fileName,
+    //         type: `image/${fileType}`,
+    //     });
 
-        data2.append("upload_preset", "Cloudinary_my_first_time"); // dari cloudinary
-        data2.append("cloud_name", "dqcnnluof");
+    //     data2.append("upload_preset", "Cloudinary_my_first_time"); // dari cloudinary
+    //     data2.append("cloud_name", "dqcnnluof");
 
-        try {
-            const res = await fetch(
-                "https://api.cloudinary.com/v1_1/dqcnnluof/image/upload",
-                {
-                    method: "POST",
-                    body: data2,
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                },
-            );
+    //     try {
+    //         const res = await fetch(
+    //             "https://api.cloudinary.com/v1_1/dqcnnluof/image/upload",
+    //             {
+    //                 method: "POST",
+    //                 body: data2,
+    //                 headers: {
+    //                     "Content-Type": "multipart/form-data",
+    //                 },
+    //             },
+    //         );
 
-            const json = await res.json();
-            setImgSend(json.secure_url);
-            console.log("Uploaded URL:", json.secure_url);
-        } catch (error) {
-            console.error("Upload failed:", error);
-        }
-    };
+    //         const json = await res.json();
+    //         setImgSend(json.secure_url);
+    //         console.log("Uploaded URL:", json.secure_url);
+    //     } catch (error) {
+    //         console.error("Upload failed:", error);
+    //     }
+    // };
 
     // end handle uplod image --------------
 
     // handle buy button -----------------------
     const buyHandle = async () => {
-        if ((dataShow.length > 0 && imgSend?.length > 0) || cash > 0) {
+        if (dataShow.length > 0 && cash > 0) {
             try {
                 dataShow.forEach(async (item: any) => {
-                    await fetch(`http://192.168.63.12:5000/cart/${item.id}`, {
+                    await fetch(`http://192.168.99.12:5000/cart/${item.id}`, {
                         method: "PATCH",
                         headers: {
                             "Content-Type": "application/json",
@@ -295,7 +295,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
                 });
 
                 await fetch(
-                    `http://192.168.63.12:5000/transaksi/${idTransaksi}`,
+                    `http://192.168.99.12:5000/transaksi/${idTransaksi}`,
                     {
                         method: "PATCH",
                         headers: {
@@ -303,8 +303,8 @@ const Cart: React.FC<props> = ({ navigation }) => {
                         },
                         body: JSON.stringify({
                             totalHarga: totalHarga,
-                            buktiBayar: imgSend,
-                            catatanTambahan: catatan,
+                            buktiBayar: "",
+                            catatanTambahan: "",
                             cash: cash,
                         }),
                     },
@@ -426,13 +426,13 @@ const Cart: React.FC<props> = ({ navigation }) => {
 
                 {/* Summary */}
                 <View style={styles.summary}>
-                    <TextInput
+                    {/* <TextInput
                         style={styles.textArea}
                         placeholder="Catatan Tambahan"
                         onChangeText={(text) => setCatatan(text)}
                         multiline={true}
                         numberOfLines={4}
-                    />
+                    /> */}
 
                     <TextInput
                         style={{
@@ -455,19 +455,19 @@ const Cart: React.FC<props> = ({ navigation }) => {
                 </View>
 
                 {/* Payment */}
-                <Text style={styles.paymentLabel}>Payment</Text>
+                {/* <Text style={styles.paymentLabel}>Payment</Text>
                 <View style={styles.paymentMethods}>
                     <Image source={GopayLogo} style={styles.paymentIcon} />
                     <Text style={{ alignSelf: "center" }}>: 087895031524</Text>
-                </View>
+                </View> */}
 
-                <TouchableOpacity
+                {/* <TouchableOpacity
                     style={styles.button}
                     onPress={() => pickImage()}
                 >
                     <Ionicons name="camera-outline" size={24} color="black" />
                     <Text style={{ color: "black" }}>Bukti Pembayaran</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
                 {/* Buy Button */}
                 <TouchableOpacity

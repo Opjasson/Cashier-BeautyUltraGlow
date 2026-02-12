@@ -35,6 +35,21 @@ const DrawerContent: React.FC<props> = ({
             <View style={styles.sidebarHead}>
                 <Text style={styles.sidebarTitle}>Ultra Glow Clinic</Text>
                 <Text style={{ color: "white", fontSize: 12, borderBottomColor: "white", borderBottomWidth: 2 }}>Jln Raya, Kalimati, Kec. Adiwerna, Kabupaten Tegal, Jawa Tengah</Text>
+
+                 <TouchableOpacity
+                    activeOpacity={0.5}
+                    style={[styles.tutupSidebar, {backgroundColor: "white", width: 120, padding: 4, borderRadius: 8}]}
+                    onPress={onPress4}>
+                    <Text
+                        style={{
+                            fontSize: 18,
+                            fontWeight: "bold",
+                            color: "red",
+                           
+                        }}>
+                        🔙 Logout
+                    </Text>
+                </TouchableOpacity>
             </View>
 
             <View style={styles.sidebarMain}>
@@ -120,22 +135,6 @@ const DrawerContent: React.FC<props> = ({
                 <TouchableOpacity
                     activeOpacity={0.5}
                     style={styles.tutupSidebar}
-                    onPress={onPress4}>
-                    <Text
-                        style={{
-                            fontSize: 18,
-                            fontWeight: "bold",
-                            color: "red",
-                            backgroundColor: "#FDFFB8",
-                            padding: 10,
-                        }}>
-                        🔙 Logout
-                    </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    activeOpacity={0.5}
-                    style={styles.tutupSidebar}
                     onPress={toggleOpen}>
                     <Ionicons
                         name="arrow-back-circle-outline"
@@ -167,6 +166,8 @@ const styles = StyleSheet.create({
         color: "white",
     },
     sidebarMain: {
+        display: "flex",
+        gap: 8,
         flexDirection: "column",
         justifyContent: "space-between",
         height: "50%",

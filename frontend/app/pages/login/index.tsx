@@ -1,8 +1,9 @@
 import { doctor } from "@/app/inventory/images";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { NavigationProp } from "@react-navigation/native";
+import { NavigationProp, useFocusEffect } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
+    Alert,
+    BackHandler,
     Image,
     ScrollView,
     StatusBar,
@@ -26,11 +27,12 @@ const LoginPage: React.FC<props> = ({ navigation }) => {
 
     const getUserId = async () => {
         try {
-            const response = await fetch("http://192.168.63.12:5000/login");
+            const response = await fetch("http://192.168.99.12:5000/login");
             const datas = await response.json();
             setData(datas); // update state
         } catch (error) {
-            console.error("Fetch error:", error);
+            setError("Email atau Password tidak terdaftar")
+            // console.error("Fetch error:", error);
         }
     };
 
@@ -38,6 +40,28 @@ const LoginPage: React.FC<props> = ({ navigation }) => {
     useEffect(() => {
         getUserId();
     }, []);
+
+    // Handle jika user klik tombol kembali handphone
+        useFocusEffect(
+            React.useCallback(() => {
+                const onBackPress = () => {
+                    // kalau mau keluar app:
+                    Alert.alert("Keluar", "Yakin mau keluar aplikasi?", [
+                        { text: "Batal", style: "cancel" },
+                        { text: "Ya", onPress: () => BackHandler.exitApp() },
+                    ]);
+                    return true; // cegah kembali ke login
+                };
+    
+                const subscription = BackHandler.addEventListener(
+                    "hardwareBackPress",
+                    onBackPress,
+                );
+    
+                return () => subscription.remove(); // hapus listener dengan cara baru
+            }, []),
+        );
+        // end handle tombol kembali
 
     // 2. Pantau perubahan pada `data`
     useEffect(() => {
@@ -48,7 +72,7 @@ const LoginPage: React.FC<props> = ({ navigation }) => {
 
     const handleLogin = async () => {
         if (email && password) {
-            const response = await fetch("http://192.168.63.12:5000/login", {
+            const response = await fetch("http://192.168.99.12:5000/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -59,8 +83,7 @@ const LoginPage: React.FC<props> = ({ navigation }) => {
                 }),
             });
             const json = await response.json();
-            console.log(json.response.id);
-            
+            // console.log(json.response.id);
 
             if (JSON.stringify(response.status) === "401") {
                 setError("Email atau password salah!");

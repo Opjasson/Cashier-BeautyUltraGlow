@@ -12,6 +12,7 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface props {
     navigation: NavigationProp<any, any>;
@@ -103,7 +104,7 @@ const UbahProduct: React.FC<props> = ({ navigation, route }) => {
 
     // Handle Update Product -----------
     const handleUpdateProduct = async () => {
-        await fetch(`http://192.168.63.12:5000/product/${id}`, {
+        await fetch(`http://192.168.99.12:5000/product/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -123,113 +124,119 @@ const UbahProduct: React.FC<props> = ({ navigation, route }) => {
     // end Handle Update Product -----------
 
     return (
-        <ScrollView>
-            <View style={styles.containerForm}>
-                <Text style={styles.textLabel}>Nama Product</Text>
-                <TextInput
-                    style={{
-                        borderWidth: 1,
-                        marginBottom: 5,
-                        borderRadius: 5,
-                    }}
-                    keyboardType="default"
-                    placeholder="Nama product"
-                    value={nama_product}
-                    onChangeText={(text) => setNama_Product(text)}
-                />
+        <SafeAreaView>
+            <ScrollView>
+                <View style={styles.containerForm}>
+                    <Text style={styles.textLabel}>Nama Product</Text>
+                    <TextInput
+                        style={{
+                            borderWidth: 1,
+                            marginBottom: 5,
+                            borderRadius: 5,
+                        }}
+                        keyboardType="default"
+                        placeholder="Nama product"
+                        value={nama_product}
+                        onChangeText={(text) => setNama_Product(text)}
+                    />
 
-                <Text style={styles.textLabel}>Harga</Text>
-                <TextInput
-                    style={{
-                        borderWidth: 1,
-                        marginBottom: 5,
-                        borderRadius: 5,
-                    }}
-                    value={String(harga_product)}
-                    keyboardType="numeric"
-                    placeholder="Rp."
-                    onChangeText={(text) => setHarga_Product(Number(text))}
-                />
+                    <Text style={styles.textLabel}>Harga</Text>
+                    <TextInput
+                        style={{
+                            borderWidth: 1,
+                            marginBottom: 5,
+                            borderRadius: 5,
+                        }}
+                        value={String(harga_product)}
+                        keyboardType="numeric"
+                        placeholder="Rp."
+                        onChangeText={(text) => setHarga_Product(Number(text))}
+                    />
 
-                <Text style={styles.textLabel}>Deskripsi</Text>
-                <TextInput
-                    style={styles.textArea}
-                    placeholder="Deskripsi"
-                    value={deskripsi}
-                    onChangeText={(text) => setDeskripsi(text)}
-                    multiline={true}
-                    numberOfLines={4}
-                />
+                    <Text style={styles.textLabel}>Deskripsi</Text>
+                    <TextInput
+                        style={styles.textArea}
+                        placeholder="Deskripsi"
+                        value={deskripsi}
+                        onChangeText={(text) => setDeskripsi(text)}
+                        multiline={true}
+                        numberOfLines={4}
+                    />
 
-                <Text style={styles.textLabel}>Kategori</Text>
-                <View
-                    style={{
-                        borderWidth: 1,
-                        marginBottom: 5,
-                        borderRadius: 5,
-                    }}
-                >
-                    <Picker
-                        selectedValue={kategori}
-                        onValueChange={(value, index) => setKategori(value)}
+                    <Text style={styles.textLabel}>Kategori</Text>
+                    <View
+                        style={{
+                            borderWidth: 1,
+                            marginBottom: 5,
+                            borderRadius: 5,
+                        }}
                     >
-                        <Picker.Item
-                            value={"undefined"}
-                            label="Pilih Ketegori"
-                        />
-                        <Picker.Item value={"makanan"} label="Makanan" />
-                        <Picker.Item value={"minuman"} label="Minuman" />
-                    </Picker>
-                </View>
+                        <Picker
+                            selectedValue={kategori}
+                            onValueChange={(value, index) => setKategori(value)}
+                        >
+                            <Picker.Item
+                                value={"undefined"}
+                                label="Pilih Ketegori"
+                            />
+                            <Picker.Item value={"makanan"} label="Makanan" />
+                            <Picker.Item value={"minuman"} label="Minuman" />
+                        </Picker>
+                    </View>
 
-                <Text style={styles.textLabel}>Promo?</Text>
-                <View
-                    style={{
-                        borderWidth: 1,
-                        marginBottom: 5,
-                        borderRadius: 5,
-                    }}
-                >
-                    <Picker
-                        selectedValue={promo}
-                        onValueChange={(value, index) => setPromo(value)}
+                    <Text style={styles.textLabel}>Promo?</Text>
+                    <View
+                        style={{
+                            borderWidth: 1,
+                            marginBottom: 5,
+                            borderRadius: 5,
+                        }}
                     >
-                        <Picker.Item
-                            value={"undefined"}
-                            label="Setting Promo"
-                        />
-                        <Picker.Item value={"no"} label="No" />
-                        <Picker.Item value={"offer"} label="Offer" />
-                    </Picker>
-                </View>
+                        <Picker
+                            selectedValue={promo}
+                            onValueChange={(value, index) => setPromo(value)}
+                        >
+                            <Picker.Item
+                                value={"undefined"}
+                                label="Setting Promo"
+                            />
+                            <Picker.Item value={"no"} label="No" />
+                            <Picker.Item value={"offer"} label="Offer" />
+                        </Picker>
+                    </View>
 
-                <Text style={styles.textLabel}>Gambar Product</Text>
-                <Image
-                    src={img_product}
-                    style={{
-                        width: 200,
-                        height: 200,
-                        marginLeft: 6,
-                        marginBottom: 10,
-                    }}
-                />
+                    <Text style={styles.textLabel}>Gambar Product</Text>
+                    <Image
+                        src={img_product}
+                        style={{
+                            width: 200,
+                            height: 200,
+                            marginLeft: 6,
+                            marginBottom: 10,
+                        }}
+                    />
+                    <TouchableOpacity
+                        style={styles.button2}
+                        onPress={() => pickImage()}
+                    >
+                        <Ionicons
+                            name="camera-outline"
+                            size={24}
+                            color="black"
+                        />
+                        <Text style={{ color: "black" }}>Pilih Gambar</Text>
+                    </TouchableOpacity>
+                </View>
+                {/* End Form */}
+
                 <TouchableOpacity
-                    style={styles.button2}
-                    onPress={() => pickImage()}
+                    style={styles.button}
+                    onPress={handleUpdateProduct}
                 >
-                    <Ionicons name="camera-outline" size={24} color="black" />
-                    <Text style={{ color: "black" }}>Pilih Gambar</Text>
+                    <Text style={{ color: "white" }}>Ubah</Text>
                 </TouchableOpacity>
-            </View>
-            {/* End Form */}
-
-            <TouchableOpacity
-                style={styles.button}
-                onPress={handleUpdateProduct}
-            >
-                <Text style={{ color: "white" }}>Ubah</Text>
-            </TouchableOpacity>
-        </ScrollView>
+            </ScrollView>
+        </SafeAreaView>
     );
 };
 

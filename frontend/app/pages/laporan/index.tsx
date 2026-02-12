@@ -68,7 +68,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
 
     // Get Data Login --------------------------
     const getUserId = async () => {
-        const response = await fetch("http://192.168.63.12:5000/login");
+        const response = await fetch("http://192.168.99.12:5000/login");
         const data = await response.json();
         setIdLogin(Object.values(data)[0]?.id);
     };
@@ -78,7 +78,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
     }, []);
 
     const logOut = async () => {
-        await fetch(`http://192.168.63.12:5000/login/${idLogin}`, {
+        await fetch(`http://192.168.99.12:5000/login/${idLogin}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -117,7 +117,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
 
     const getCart = async () => {
         try {
-            const response = await fetch("http://192.168.63.12:5000/cart");
+            const response = await fetch("http://192.168.99.12:5000/cart");
             const cat = await response.json();
             setCart(cat.response);
         } catch (error) {
@@ -127,7 +127,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
 
     const getDataBarang = async () => {
         try {
-            const response = await fetch("http://192.168.63.12:5000/product");
+            const response = await fetch("http://192.168.99.12:5000/product");
             const barang = await response.json();
             setBarang(barang);
         } catch (error) {

@@ -18,7 +18,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MenuDrawer from "react-native-side-drawer";
-import { Add, Filter, Location, Search } from "../../inventory/icons";
+import { Add } from "../../inventory/icons";
 
 interface props {
     navigation: NavigationProp<any, any>;
@@ -78,7 +78,7 @@ const Home: React.FC<props> = ({ navigation }) => {
 
     // Get Data Login --------------------------
     const getUserId = async () => {
-        const response = await fetch("http://192.168.63.12:5000/login");
+        const response = await fetch("http://192.168.99.12:5000/login");
         const data = await response.json();
         const token = await AsyncStorage.getAllKeys();
         console.log("TOKENALL", token);
@@ -92,15 +92,17 @@ const Home: React.FC<props> = ({ navigation }) => {
     }, []);
 
     const getAkunLoggin = async () => {
-        const response = await fetch(`http://192.168.63.12:5000/user/${id}`);
+        const response = await fetch(`http://192.168.99.12:5000/user/${id}`);
         const user = await response.json();
         // console.log("login",user);
-        setUser(user.role);
-        setUsername(user.username);
+        if (user != null) {
+            setUser(user.role);
+            setUsername(user.username);
+        }
     };
 
     const logOut = async () => {
-        await fetch(`http://192.168.63.12:5000/login/${idLogin}`, {
+        await fetch(`http://192.168.99.12:5000/login/${idLogin}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -113,7 +115,7 @@ const Home: React.FC<props> = ({ navigation }) => {
     // ------------------------
 
     const getProducts = async () => {
-        const response = await fetch("http://192.168.63.12:5000/product");
+        const response = await fetch("http://192.168.99.12:5000/product");
         const data = await response.json();
         setProducts(data);
         // console.log(data);
@@ -138,7 +140,7 @@ const Home: React.FC<props> = ({ navigation }) => {
     };
 
     const createTransaksi = async () => {
-        const response = await fetch("http://192.168.63.12:5000/transaksi", {
+        const response = await fetch("http://192.168.99.12:5000/transaksi", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -152,7 +154,7 @@ const Home: React.FC<props> = ({ navigation }) => {
     };
 
     const getTransaksi = async () => {
-        const response = await fetch("http://192.168.63.12:5000/transaksi");
+        const response = await fetch("http://192.168.99.12:5000/transaksi");
         const transaksiS = await response.json();
         // console.log(transaksiS.response);
         setDataTransaksi(transaksiS.response);
@@ -224,7 +226,14 @@ const Home: React.FC<props> = ({ navigation }) => {
             <StatusBar backgroundColor={"#2171c6"} barStyle={"light-content"} />
             <ScrollView>
                 {/* Top menu */}
-                <View style={{ backgroundColor: "#2171c6", paddingVertical: 18, borderBottomLeftRadius: 12, borderBottomRightRadius: 12 }}>
+                <View
+                    style={{
+                        backgroundColor: "#2171c6",
+                        paddingVertical: 18,
+                        borderBottomLeftRadius: 12,
+                        borderBottomRightRadius: 12,
+                    }}
+                >
                     {/* header page */}
                     <View
                         style={{
@@ -252,10 +261,10 @@ const Home: React.FC<props> = ({ navigation }) => {
                                     fontWeight: "500",
                                     fontSize: 12,
                                     marginLeft: 5,
-                                    color: "white"
+                                    color: "white",
                                 }}
                             >
-                            💌 Kota Tegal, Indonesia
+                                💌 Kota Tegal, Indonesia
                             </Text>
                         </View>
                         <TouchableOpacity activeOpacity={0.7}>
@@ -265,7 +274,14 @@ const Home: React.FC<props> = ({ navigation }) => {
                     {/* end header page */}
 
                     <View style={{ marginHorizontal: 30, marginTop: 15 }}>
-                        <Text style={{ fontWeight: "500", fontSize: 14, color: "white", textAlign: "center" }}>
+                        <Text
+                            style={{
+                                fontWeight: "500",
+                                fontSize: 14,
+                                color: "white",
+                                textAlign: "center",
+                            }}
+                        >
                             Good Morning, {username}
                         </Text>
                     </View>
@@ -291,7 +307,9 @@ const Home: React.FC<props> = ({ navigation }) => {
                                 width: "100%",
                             }}
                         >
-                            <TextInput style={{ fontSize: 20, padding: 0 }}>👩🏼‍⚕️</TextInput>
+                            <TextInput style={{ fontSize: 20, padding: 0 }}>
+                                👩🏼‍⚕️
+                            </TextInput>
                             <TextInput
                                 placeholder="Pencarian ..."
                                 placeholderTextColor={"white"}
@@ -322,7 +340,7 @@ const Home: React.FC<props> = ({ navigation }) => {
                             borderRadius: 30,
                             gap: 5,
                             width: "90%",
-                            marginTop: 12
+                            marginTop: 12,
                         }}
                     >
                         <FontAwesome6
@@ -344,7 +362,9 @@ const Home: React.FC<props> = ({ navigation }) => {
 
                 {/* Product */}
                 <View style={{ marginTop: 20, marginLeft: 20 }}>
-
+                    <Text style={{ fontWeight: "500", padding: 10 }}>
+                        All Menu
+                    </Text>
                     <ScrollView
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
@@ -437,99 +457,95 @@ const Home: React.FC<props> = ({ navigation }) => {
                                       </View>
                                   </TouchableOpacity>
                               ))
-                            : products
-                                  .filter((a) => a.kategori_product === filter)
-                                  .map((item, index) => (
-                                      <TouchableOpacity
-                                          key={index}
-                                          onPress={
-                                              transaksiId === 2 ||
-                                              transaksiStatusUser?.length > 0
-                                                  ? () =>
-                                                        navigation.navigate(
-                                                            "DetailProduct",
-                                                            {
-                                                                data: item,
-                                                                idTrans:
-                                                                    transaksiStatusUser[0]
-                                                                        ?.id,
-                                                                idUser: id,
-                                                            },
-                                                        )
-                                                  : () =>
-                                                        alert(
-                                                            "Buat Transaksi Dulu!",
-                                                        )
-                                          }
-                                          activeOpacity={0.7}
+                            : products.map((item, index) => (
+                                  <TouchableOpacity
+                                      key={index}
+                                      onPress={
+                                          transaksiId === 2 ||
+                                          transaksiStatusUser?.length > 0
+                                              ? () =>
+                                                    navigation.navigate(
+                                                        "DetailProduct",
+                                                        {
+                                                            data: item,
+                                                            idTrans:
+                                                                transaksiStatusUser[0]
+                                                                    ?.id,
+                                                            idUser: id,
+                                                        },
+                                                    )
+                                              : () =>
+                                                    alert(
+                                                        "Buat Transaksi Dulu!",
+                                                    )
+                                      }
+                                      activeOpacity={0.7}
+                                      style={{
+                                          backgroundColor: "white",
+                                          borderRadius: 20,
+                                          paddingHorizontal: 5,
+                                          paddingVertical: 5,
+                                          elevation: 5,
+                                          shadowColor: "black",
+                                          marginRight: 8,
+                                          margin: 8,
+                                          width: 155,
+                                      }}
+                                  >
+                                      <Image
+                                          src={item?.img_product}
                                           style={{
-                                              backgroundColor: "white",
+                                              width: 144,
+                                              height: 130,
                                               borderRadius: 20,
-                                              paddingHorizontal: 5,
-                                              paddingVertical: 5,
-                                              elevation: 5,
-                                              shadowColor: "black",
-                                              marginRight: 8,
-                                              margin: 8,
-                                              width: 155,
+                                          }}
+                                      />
+                                      <View
+                                          style={{
+                                              flexDirection: "row",
+                                              justifyContent: "space-between",
+                                              marginTop: 10,
                                           }}
                                       >
-                                          <Image
-                                              src={item?.img_product}
-                                              style={{
-                                                  width: 144,
-                                                  height: 130,
-                                                  borderRadius: 20,
-                                              }}
-                                          />
-                                          <View
-                                              style={{
-                                                  flexDirection: "row",
-                                                  justifyContent:
-                                                      "space-between",
-                                                  marginTop: 10,
-                                              }}
-                                          >
-                                              <View>
-                                                  <Text
-                                                      style={{
-                                                          fontWeight: "500",
-                                                          fontSize: 14,
-                                                      }}
-                                                  >
-                                                      {item.nama_product}
-                                                  </Text>
-                                                  <Text
-                                                      style={{
-                                                          marginTop: 5,
-                                                          fontSize: 10,
-                                                      }}
-                                                  >
-                                                      {item.deskripsi.substring(
-                                                          0,
-                                                          30,
-                                                      )}
-                                                      ...
-                                                  </Text>
-                                              </View>
-                                          </View>
-
-                                          <View
-                                              style={{
-                                                  flexDirection: "row",
-                                                  alignItems: "center",
-                                                  justifyContent:
-                                                      "space-between",
-                                              }}
-                                          >
-                                              <Text>
-                                                  Rp.
-                                                  {item.harga_product.toLocaleString()}
+                                          <View>
+                                              <Text
+                                                  style={{
+                                                      fontWeight: "500",
+                                                      fontSize: 14,
+                                                  }}
+                                              >
+                                                  {item.nama_product}
                                               </Text>
-                                              <Image source={Add} />
+                                              <Text
+                                                  style={{
+                                                      marginTop: 5,
+                                                      fontSize: 10,
+                                                  }}
+                                              >
+                                                  {item.deskripsi.substring(
+                                                      0,
+                                                      30,
+                                                  )}
+                                                  ...
+                                              </Text>
                                           </View>
-                                      </TouchableOpacity>
-                                  ))}
+                                      </View>
+
+                                      <View
+                                          style={{
+                                              flexDirection: "row",
+                                              alignItems: "center",
+                                              justifyContent: "space-between",
+                                          }}
+                                      >
+                                          <Text>
+                                              Rp.
+                                              {item.harga_product.toLocaleString()}
+                                          </Text>
+                                          <Image source={Add} />
+                                      </View>
+                                  </TouchableOpacity>
+                              ))}
 
                         {/* End Product */}
                     </ScrollView>

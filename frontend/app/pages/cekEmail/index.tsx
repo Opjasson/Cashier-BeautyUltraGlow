@@ -23,7 +23,7 @@ const CekEmail: React.FC<props> = ({ navigation }) => {
     const handleCek = async () => {
         if (email) {
             const response = await fetch(
-                "http://192.168.63.12:5000/forgotPass",
+                "http://192.168.99.12:5000/forgotPass",
                 {
                     method: "POST",
                     headers: {
@@ -61,7 +61,9 @@ const CekEmail: React.FC<props> = ({ navigation }) => {
             <View style={styles.containerForm}>
                 <View style={styles.headLogin}>
                     <View style={styles.headLogin}>
-                        <Text style={styles.headLoginText1}>Cek Email User</Text>
+                        <Text style={styles.headLoginText1}>
+                            Cek Email User
+                        </Text>
                         <Image
                             style={{ height: 180, width: 180 }}
                             source={system}
@@ -115,13 +117,13 @@ const styles = StyleSheet.create({
     headLoginText2: {
         fontSize: 20,
         fontWeight: "light",
-        color: "#2171c6"
+        color: "#2171c6",
     },
     garisHead: {
         borderBottomWidth: 3,
         width: "70%",
         marginTop: -10,
-        borderColor: "#2171c6"
+        borderColor: "#2171c6",
     },
     button: {
         backgroundColor: "#2171c6",
