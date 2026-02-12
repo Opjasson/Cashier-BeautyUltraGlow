@@ -363,7 +363,7 @@ const Home: React.FC<props> = ({ navigation }) => {
                 {/* Product */}
                 <View style={{ marginTop: 20, marginLeft: 20 }}>
                     <Text style={{ fontWeight: "500", padding: 10 }}>
-                        All Menu
+                        Semua Produk
                     </Text>
                     <ScrollView
                         horizontal={true}
@@ -564,7 +564,7 @@ const Home: React.FC<props> = ({ navigation }) => {
                 >
                     {/* Product */}
                     <Text style={{ fontWeight: "500", padding: 10 }}>
-                        Special Offer
+                        Penawaran Promo
                     </Text>
                     <View
                         style={{
