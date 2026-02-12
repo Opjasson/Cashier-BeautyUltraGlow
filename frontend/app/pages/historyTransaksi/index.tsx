@@ -1,5 +1,4 @@
 import { DrawerContent } from "@/app/components";
-import { AntDesign } from "@expo/vector-icons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { NavigationProp } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
@@ -153,7 +152,7 @@ const HistoryPesanan: React.FC<props> = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <StatusBar barStyle={"default"} />
+            <StatusBar barStyle={"light-content"} backgroundColor={"#2171c6"} />
             <View
                 style={{
                     flexDirection: "row",
@@ -188,38 +187,86 @@ const HistoryPesanan: React.FC<props> = ({ navigation }) => {
                                 })
                             }
                         >
-                            <View style={styles.rowBetween}>
-                                <Text style={styles.date}>
+                            <View
+                                style={{
+                                    backgroundColor: "#ffffff",
+                                    borderRadius: 20, // lebih rounded seperti contoh
+                                    padding: 20,
+                                    paddingTop: 24,
+                                    paddingRight: 24,
+                                    paddingBottom: 20,
+                                    marginHorizontal: 16,
+                                    marginVertical: 12,
+                                    shadowColor: "#000",
+                                    shadowOffset: { width: 0, height: 4 },
+                                    shadowOpacity: 0.15,
+                                    shadowRadius: 10,
+                                    elevation: 6,
+                                    borderWidth: 1,
+                                    borderColor: "#f0f0f0",
+                                    position: "relative", // untuk positioning matahari absolut
+                                }}
+                            >
+                                {/* Matahari - diposisikan absolut di kanan atas */}
+                                <Text
+                                    style={{
+                                        position: "absolute",
+                                        top: -10, // agak keluar ke atas agar mirip contoh
+                                        right: -10, // agak keluar ke kanan
+                                        fontSize: 80, // ukuran besar seperti di contoh
+                                        lineHeight: 80,
+                                    }}
+                                >
+                                    ☀️
+                                </Text>
+
+                                {/* Tanggal */}
+                                <Text
+                                    style={{
+                                        fontSize: 15,
+                                        color: "#555",
+                                        fontWeight: "500",
+                                        marginBottom: 16,
+                                    }}
+                                >
                                     {item.createdAt.split("T")[0]}
                                 </Text>
-                                <Text style={styles.type}>
-                                    Status{" "}
-                                    {item.status === null ? (
-                                        <AntDesign
-                                            name="checkcircleo"
-                                            size={16}
-                                            color="black"
-                                        />
-                                    ) : (
-                                        <AntDesign
-                                            name="checkcircle"
-                                            size={16}
-                                            color="green"
-                                        />
-                                    )}
-                                </Text>
-                            </View>
-                            <View style={styles.titleRow}>
-                                <View style={styles.verticalLine} />
-                                <View style={styles.content}>
-                                    <Text style={styles.title}>
-                                        Pelanggan : {item.namaPelanggan}
+
+                                {/* Konten detail */}
+                                <View style={{ marginBottom: 20 }}>
+                                    <Text
+                                        style={{
+                                            fontSize: 17,
+                                            fontWeight: "bold",
+                                            color: "#000",
+                                            marginBottom: 10,
+                                        }}
+                                    >
+                                        Nama Kasir :{" "}
+                                        {item.namaPelanggan.toUpperCase()}
                                     </Text>
-                                    <Text style={styles.location}>
+
+                                    <Text
+                                        style={{
+                                            fontSize: 15,
+                                            color: "#222",
+                                            lineHeight: 24,
+                                            marginBottom: 6,
+                                        }}
+                                    >
                                         Id Pesanan : {item.uuid.slice(0, 8)}
                                     </Text>
+
                                     {item.keranjangs.map((name, idx) => (
-                                        <Text key={idx} style={styles.name}>
+                                        <Text
+                                            key={idx}
+                                            style={{
+                                                fontSize: 15,
+                                                color: "#222",
+                                                lineHeight: 24,
+                                                marginBottom: 6,
+                                            }}
+                                        >
                                             {
                                                 barang.find(
                                                     (a) =>
@@ -229,17 +276,40 @@ const HistoryPesanan: React.FC<props> = ({ navigation }) => {
                                             x {name.qty}
                                         </Text>
                                     ))}
+
                                 </View>
-                            </View>
-                            <View style={styles.rowBetween}>
-                                <TouchableOpacity>
-                                    <Text style={styles.showLess}>
+
+                                {/* Total */}
+                                <View
+                                    style={{
+                                        flexDirection: "row",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                        borderTopWidth: 1,
+                                        borderTopColor: "#e8e8e8",
+                                        paddingTop: 14,
+                                    }}
+                                >
+                                    <Text
+                                        style={{
+                                            fontSize: 15,
+                                            color: "#444",
+                                            fontWeight: "600",
+                                        }}
+                                    >
                                         Total Nominal :
                                     </Text>
-                                </TouchableOpacity>
-                                <Text style={styles.price}>
-                                    {item.totalHarga}
-                                </Text>
+
+                                    <Text
+                                        style={{
+                                            fontSize: 19,
+                                            fontWeight: "bold",
+                                            color: "#000",
+                                        }}
+                                    >
+                                        {item.totalHarga}
+                                    </Text>
+                                </View>
                             </View>
                         </TouchableOpacity>
                     ))}
@@ -266,7 +336,7 @@ const styles = StyleSheet.create({
         paddingTop: 10,
     },
     card: {
-        backgroundColor: "#fff",
+        backgroundColor: "#2171c6",
         marginHorizontal: 16,
         marginVertical: 8,
         borderRadius: 12,
