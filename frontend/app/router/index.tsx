@@ -19,8 +19,6 @@ import {
     SetAkun,
     TambahUser,
 } from "../pages";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { ButtonTabs } from "../components/moleculs";
 import UbahUser from "../pages/ubahUser";
 
 const Stack = createNativeStackNavigator();

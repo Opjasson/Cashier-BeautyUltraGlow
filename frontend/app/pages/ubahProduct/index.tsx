@@ -180,8 +180,9 @@ const UbahProduct: React.FC<props> = ({ navigation, route }) => {
                                 value={"undefined"}
                                 label="Pilih Ketegori"
                             />
-                            <Picker.Item value={"makanan"} label="Makanan" />
-                            <Picker.Item value={"minuman"} label="Minuman" />
+                            <Picker.Item value={"cream"} label="Cream" />
+                            <Picker.Item value={"spray"} label="Spray" />
+                            <Picker.Item value={"kombinasi"} label="Kombinasi" />
                         </Picker>
                     </View>
 
@@ -255,7 +256,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
     },
     button: {
-        backgroundColor: "#2f823a",
+        backgroundColor: "#2171c6",
         width: 100,
         padding: 8,
         alignItems: "center",

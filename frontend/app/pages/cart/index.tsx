@@ -303,8 +303,8 @@ const Cart: React.FC<props> = ({ navigation }) => {
                         },
                         body: JSON.stringify({
                             totalHarga: totalHarga,
-                            buktiBayar: "",
-                            catatanTambahan: "",
+                            buktiBayar: "xxx",
+                            catatanTambahan: "xxxx",
                             cash: cash,
                         }),
                     },
@@ -609,7 +609,7 @@ const styles = StyleSheet.create({
         height: 50,
     },
     buyButton: {
-        backgroundColor: "#1E5128",
+        backgroundColor: "#2171c6",
         paddingVertical: 14,
         borderRadius: 12,
         alignItems: "center",

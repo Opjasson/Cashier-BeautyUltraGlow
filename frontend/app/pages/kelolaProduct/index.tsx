@@ -128,7 +128,7 @@ const KelolaProduct: React.FC<props> = ({ navigation }) => {
                 style={{
                     justifyContent: "center",
                     flexDirection: "row",
-                    backgroundColor: "#2f823a",
+                    backgroundColor: "#2171c6",
                     alignItems: "center",
                     paddingHorizontal: 10,
                     paddingVertical: 10,

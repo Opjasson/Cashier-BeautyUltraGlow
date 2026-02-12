@@ -15,7 +15,7 @@ interface Props {
 }
 
 
-const index: React.FC<Props> = ({navigation}) => {
+const SplashScreen: React.FC<Props> = ({navigation}) => {
     return (
         <View style={{ flex: 1, backgroundColor: "#faf9f7" }}>
             <View style={styles.bgSplash}>
@@ -39,7 +39,7 @@ const index: React.FC<Props> = ({navigation}) => {
     );
 };
 
-export default index;
+export default SplashScreen;
 
 const styles = StyleSheet.create({
     bgSplash: {
