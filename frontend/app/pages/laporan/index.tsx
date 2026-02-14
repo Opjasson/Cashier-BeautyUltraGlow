@@ -279,7 +279,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
 <body>
 
   <div class="header">
-    <img src="../../inventory/images/hotel.png" alt="Grandian Hotel" height="50"><br>
+    <img src="../../inventory/images/hotel.png" alt="Ultra Glow" height="50"><br>
     <h1>Laporan Pendataan Penjualan ${date.toISOString().split("T")[0]} - ${
         date2.toISOString().split("T")[0]
     }</h1>
