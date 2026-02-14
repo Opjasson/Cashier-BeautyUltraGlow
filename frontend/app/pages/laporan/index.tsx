@@ -1,5 +1,6 @@
 import { DrawerContent } from "@/app/components";
-import AntDesign from "@expo/vector-icons/AntDesign";
+import { logo } from "@/app/inventory/images";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -10,6 +11,7 @@ import * as Print from "expo-print";
 import * as Sharing from "expo-sharing";
 import React, { useEffect, useState } from "react";
 import {
+    Image,
     ScrollView,
     StyleSheet,
     Text,
@@ -388,6 +390,11 @@ const Laporan: React.FC<props> = ({ navigation }) => {
             {/* menampilkan daftar menu */}
             <ScrollView style={{ paddingLeft: 10 }}>
                 <View>
+                    <Image
+                        style={{ height: 190, width: 190, marginHorizontal: "auto" }}
+                        source={logo}
+                    />
+
                     <Text
                         style={{
                             fontSize: 20,
@@ -397,16 +404,17 @@ const Laporan: React.FC<props> = ({ navigation }) => {
                     >
                         Klinik Kecantikan Ultra Glow
                     </Text>
-                    <Text style={{ borderBottomWidth: 2, height: 2 }}></Text>
                     <Text
                         style={{
-                            fontSize: 15,
-                            fontWeight: "light",
+                            fontSize: 12,
+                            fontWeight: "300",
                             textAlign: "center",
                         }}
                     >
-                        Filter data berdasarkan tanggal yang dibutuhkan
+                        Jln Raya, Kalimati, Kec. Adiwerna, Kabupaten Tegal, Jawa Tengah
                     </Text>
+                    <Text style={{ borderBottomWidth: 2, height: 2 }}></Text>
+
                     <View
                         style={{
                             flexDirection: "row",
@@ -433,8 +441,8 @@ const Laporan: React.FC<props> = ({ navigation }) => {
                             </Text>
                         </TouchableOpacity>
 
-                        <AntDesign
-                            name="caretright"
+                        <FontAwesome
+                            name="arrow-circle-right"
                             size={24}
                             color="black"
                             style={{ marginTop: 18 }}
@@ -559,7 +567,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         paddingVertical: 4,
         borderRadius: 10,
-        backgroundColor: "#1E5128",
+        backgroundColor: "#2171c6",
     },
     container: {
         padding: 10,
