@@ -61,7 +61,7 @@ const ChangePass: React.FC<props> = ({ navigation, route }) => {
                         Lakukan Perubahan Password
                     </Text>
                     <Text style={styles.headLoginText2}>
-                        Grandian Hotel Brebes Restaurant
+                        Klinik Kecantikan Ultra Glow
                     </Text>
                     <Text style={styles.garisHead}></Text>
                 </View>
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: "900",
         marginBottom: 10,
-        color: "#1E5128",
+        color: "#0000",
         textAlign: "center",
     },
     headLoginText2: {
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
         marginTop: -10,
     },
     button: {
-        backgroundColor: "#1E5128",
+        backgroundColor: "#007bff",
         width: "80%",
         paddingVertical: 15,
         alignItems: "center",
