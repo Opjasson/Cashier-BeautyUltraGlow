@@ -157,9 +157,9 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
         </head>
         <body>
         <div class="center">
-        <h3>Grandian Brebes Restaurant</h3>
-        <p>Jl. Jendral Sudirman, No 20 <br>Kab. Brebes</p>
-        <p>No. Telp: +62 895-1462-6206</p>
+        <h3>Klinik Kecantikan Ultra Glow</h3>
+        <p>Jln Raya, Kalimati, Kec. Adiwerna, <br>Kabupaten Tegal, Jawa Tengah</p>
+        <p>No. Telp: +62 817-7022-0529</p>
         </div>
         <div class="line"></div>
         <div class="row"><span>${dateNow}</span></div>
@@ -173,9 +173,9 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
               <div class="line"></div>
               <div class="row"><span>Jumlah barang</span><span>Qty : ${handleQTyAll()}</span></div>
               <div class="row bold"><span>Total</span><span>Rp ${totalHarga?.toLocaleString()}</span></div>
-              <div class="row"><span>Bayar (Cash)</span><span>Rp ${totalHarga?.toLocaleString()}</span></div>
+              <div class="row"><span>Bayar (Cash)</span><span>Rp ${cash?.toLocaleString()}</span></div>
               <div class="row"><span>Kembali</span><span>Rp ${
-                  totalHarga! - totalHarga!
+                  cash! - totalHarga!
               }</span></div>
         
               <div class="center"><p>Terima kasih telah berbelanja</p></div>
@@ -186,19 +186,32 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
 
     const handleSavePdf = async () => {
         const htmlContent = handleCetak();
-        const { uri } = await Print.printToFileAsync({
-            html: htmlContent,
-        });
-
-        const customFileName = `GrandianResto-Brebes_${dateNow}.pdf`;
-        const newUri = FileSystem.documentDirectory + customFileName;
-
-        await FileSystem.moveAsync({
-            from: uri,
-            to: newUri,
-        });
-
-        await Sharing.shareAsync(newUri); // Menyimpan atau kirim PDF
+        
+                const { uri } = await Print.printToFileAsync({
+                    html: htmlContent,
+                });
+        
+                const customFileName = `Nota Transaksi-Ultra Glow_${dateNow}.pdf`;
+        
+                // buat file target
+                const targetFile = new FileSystem.File(
+                    FileSystem.Paths.document,
+                    customFileName,
+                );
+        
+                // cek dulu
+                if (await targetFile.exists) {
+                    await targetFile.delete();
+                }
+        
+                // file sumber
+                const sourceFile = new FileSystem.File(uri);
+        
+                // move → harus File object
+                await sourceFile.move(targetFile);
+        
+                // share pakai uri hasil target
+                await Sharing.shareAsync(targetFile.uri);
     };
 
     return (
@@ -282,21 +295,26 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
                         paddingHorizontal: 13,
                     }}
                 >
-                    <Text>Delete</Text>
+                    <Text style={{
+                        color: "white"
+                    }}>Delete</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={handleSavePdf}
                     style={{
-                        backgroundColor: "#4A9782",
+                        backgroundColor: "#2171c6",
                         padding: 10,
                         borderRadius: 10,
                         // paddingHorizontal: 13,
                         flexDirection: "row",
+                        gap: 8
                     }}
                 >
-                    <FontAwesome5 name="print" size={24} color="black" />
-                    <Text>Cetak</Text>
+                    <FontAwesome5 name="print" size={24} color="white" />
+                    <Text style={{
+                        color: "white"
+                    }}>Cetak</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>
