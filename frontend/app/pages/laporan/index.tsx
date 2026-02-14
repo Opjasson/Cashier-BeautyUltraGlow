@@ -283,7 +283,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
     <h1>Laporan Pendataan Penjualan ${date.toISOString().split("T")[0]} - ${
         date2.toISOString().split("T")[0]
     }</h1>
-    <p><strong>Grandian Hotel Brebes</strong><br>+62 895-1462-6206</p>
+    <p><strong>Klinik Ultra Glow</strong><br>+62 895-1462-6206</p>
   </div>
 
   <table>
@@ -382,7 +382,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
                             textAlign: "center",
                         }}
                     >
-                        Grandian Hotel Brebes Restaurant
+                        Klinik Kecantikan Ultra Glow
                     </Text>
                     <Text style={{ borderBottomWidth: 2, height: 2 }}></Text>
                     <Text
