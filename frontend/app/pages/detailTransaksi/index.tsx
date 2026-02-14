@@ -1,4 +1,3 @@
-import { AntDesign } from "@expo/vector-icons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationProp, RouteProp } from "@react-navigation/native";
@@ -8,7 +7,6 @@ import * as Print from "expo-print";
 import * as Sharing from "expo-sharing";
 import React, { useEffect, useState } from "react";
 import {
-    Image,
     ScrollView,
     StyleSheet,
     Text,
@@ -45,7 +43,7 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
 
     const getTransaksiByUUID = async () => {
         const response = await fetch(
-            `http://192.168.99.12:5000/transaksi/${routeUuid}`,
+            `http://192.168.106.12:5000/transaksi/${routeUuid}`,
         );
         const dataJson = await response.json();
         setCart(dataJson.keranjangs);
@@ -75,7 +73,7 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
 
     const getDataBarang = async () => {
         try {
-            const response = await fetch("http://192.168.99.12:5000/product");
+            const response = await fetch("http://192.168.106.12:5000/product");
             const barang = await response.json();
             setBarang(barang);
         } catch (error) {
@@ -92,7 +90,7 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
     }, []);
 
     const deleteTransaksi = async () => {
-        await fetch(`http://192.168.99.12:5000/transaksi/${id}`, {
+        await fetch(`http://192.168.106.12:5000/transaksi/${id}`, {
             method: "DELETE",
         });
         alert("Transaksi Berhasil Dihapus!");
@@ -100,7 +98,7 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
     };
 
     const handleUpdateStatus = async () => {
-        await fetch(`http://192.168.99.12:5000/transaksi/${id}`, {
+        await fetch(`http://192.168.106.12:5000/transaksi/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",

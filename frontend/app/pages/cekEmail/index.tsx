@@ -23,7 +23,7 @@ const CekEmail: React.FC<props> = ({ navigation }) => {
     const handleCek = async () => {
         if (email) {
             const response = await fetch(
-                "http://192.168.99.12:5000/forgotPass",
+                "http://192.168.106.12:5000/forgotPass",
                 {
                     method: "POST",
                     headers: {

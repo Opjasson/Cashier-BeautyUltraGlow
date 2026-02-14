@@ -29,7 +29,7 @@ const UbahUser: React.FC<props> = ({ navigation, route }) => {
     const handleUbah = async (id: number) => {
         if (email && password && confPassword) {
             const response = await fetch(
-                `http://192.168.99.12:5000/user/${id}`,
+                `http://192.168.106.12:5000/user/${id}`,
                 {
                     method: "PATCH",
                     headers: {

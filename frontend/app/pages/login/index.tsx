@@ -27,11 +27,11 @@ const LoginPage: React.FC<props> = ({ navigation }) => {
 
     const getUserId = async () => {
         try {
-            const response = await fetch("http://192.168.99.12:5000/login");
+            const response = await fetch("http://192.168.106.12:5000/login");
             const datas = await response.json();
             setData(datas); // update state
         } catch (error) {
-            setError("Email atau Password tidak terdaftar")
+            setError("Email atau Password tidak terdaftar");
             // console.error("Fetch error:", error);
         }
     };
@@ -42,26 +42,26 @@ const LoginPage: React.FC<props> = ({ navigation }) => {
     }, []);
 
     // Handle jika user klik tombol kembali handphone
-        useFocusEffect(
-            React.useCallback(() => {
-                const onBackPress = () => {
-                    // kalau mau keluar app:
-                    Alert.alert("Keluar", "Yakin mau keluar aplikasi?", [
-                        { text: "Batal", style: "cancel" },
-                        { text: "Ya", onPress: () => BackHandler.exitApp() },
-                    ]);
-                    return true; // cegah kembali ke login
-                };
-    
-                const subscription = BackHandler.addEventListener(
-                    "hardwareBackPress",
-                    onBackPress,
-                );
-    
-                return () => subscription.remove(); // hapus listener dengan cara baru
-            }, []),
-        );
-        // end handle tombol kembali
+    useFocusEffect(
+        React.useCallback(() => {
+            const onBackPress = () => {
+                // kalau mau keluar app:
+                Alert.alert("Keluar", "Yakin mau keluar aplikasi?", [
+                    { text: "Batal", style: "cancel" },
+                    { text: "Ya", onPress: () => BackHandler.exitApp() },
+                ]);
+                return true; // cegah kembali ke login
+            };
+
+            const subscription = BackHandler.addEventListener(
+                "hardwareBackPress",
+                onBackPress,
+            );
+
+            return () => subscription.remove(); // hapus listener dengan cara baru
+        }, []),
+    );
+    // end handle tombol kembali
 
     // 2. Pantau perubahan pada `data`
     useEffect(() => {
@@ -72,7 +72,7 @@ const LoginPage: React.FC<props> = ({ navigation }) => {
 
     const handleLogin = async () => {
         if (email && password) {
-            const response = await fetch("http://192.168.99.12:5000/login", {
+            const response = await fetch("http://192.168.106.12:5000/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

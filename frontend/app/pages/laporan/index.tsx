@@ -68,7 +68,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
 
     // Get Data Login --------------------------
     const getUserId = async () => {
-        const response = await fetch("http://192.168.99.12:5000/login");
+        const response = await fetch("http://192.168.106.12:5000/login");
         const data = await response.json();
         setIdLogin(Object.values(data)[0]?.id);
     };
@@ -78,7 +78,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
     }, []);
 
     const logOut = async () => {
-        await fetch(`http://192.168.99.12:5000/login/${idLogin}`, {
+        await fetch(`http://192.168.106.12:5000/login/${idLogin}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -117,7 +117,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
 
     const getCart = async () => {
         try {
-            const response = await fetch("http://192.168.99.12:5000/cart");
+            const response = await fetch("http://192.168.106.12:5000/cart");
             const cat = await response.json();
             setCart(cat.response);
         } catch (error) {
@@ -127,7 +127,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
 
     const getDataBarang = async () => {
         try {
-            const response = await fetch("http://192.168.99.12:5000/product");
+            const response = await fetch("http://192.168.106.12:5000/product");
             const barang = await response.json();
             setBarang(barang);
         } catch (error) {
@@ -225,7 +225,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
           <html>
             <head>
   <meta charset="UTF-8">
-  <title>Laporan Pencatatan - September 2020</title>
+  <title>Laporan Pencatatan - 2026</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -283,7 +283,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
     <h1>Laporan Pendataan Penjualan ${date.toISOString().split("T")[0]} - ${
         date2.toISOString().split("T")[0]
     }</h1>
-    <p><strong>Klinik Ultra Glow</strong><br>+62 895-1462-6206</p>
+    <p><strong>Klinik Ultra Glow</strong><br>+62 817-7022-0529</p>
   </div>
 
   <table>
@@ -310,19 +310,32 @@ const Laporan: React.FC<props> = ({ navigation }) => {
 
     const handleSavePdf = async () => {
         const htmlContent = generateHTML();
+
         const { uri } = await Print.printToFileAsync({
             html: htmlContent,
         });
 
-        const customFileName = `Laporan-Penjualan-Resto-GrandianBrebes_${dateNow}.pdf`;
-        const newUri = FileSystem.documentDirectory + customFileName;
+        const customFileName = `Laporan-Klinik Ultra Glow_${dateNow}.pdf`;
 
-        await FileSystem.moveAsync({
-            from: uri,
-            to: newUri,
-        });
+        // buat file target
+        const targetFile = new FileSystem.File(
+            FileSystem.Paths.document,
+            customFileName,
+        );
 
-        await Sharing.shareAsync(newUri); // Menyimpan atau kirim PDF
+        // cek dulu
+        if (await targetFile.exists) {
+            await targetFile.delete();
+        }
+
+        // file sumber
+        const sourceFile = new FileSystem.File(uri);
+
+        // move → harus File object
+        await sourceFile.move(targetFile);
+
+        // share pakai uri hasil target
+        await Sharing.shareAsync(targetFile.uri);
     };
 
     // ------------------------------------------------------------

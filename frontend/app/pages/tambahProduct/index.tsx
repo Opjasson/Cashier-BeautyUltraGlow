@@ -99,7 +99,7 @@ const TambahProduct: React.FC<props> = ({ navigation, route }) => {
     // Handle Update Product -----------
     const handleUpdateProduct = async () => {
         try {
-            await fetch(`http://192.168.99.12:5000/product`, {
+            await fetch(`http://192.168.106.12:5000/product`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -175,7 +175,10 @@ const TambahProduct: React.FC<props> = ({ navigation, route }) => {
                             />
                             <Picker.Item value={"spray"} label="Spray" />
                             <Picker.Item value={"cream"} label="Cream" />
-                            <Picker.Item value={"kombinasi"} label="Kombinasi" />
+                            <Picker.Item
+                                value={"kombinasi"}
+                                label="Kombinasi"
+                            />
                         </Picker>
                     </View>
 
