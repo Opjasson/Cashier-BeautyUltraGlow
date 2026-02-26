@@ -311,7 +311,6 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
                         gap: 8
                     }}
                 >
-                    <FontAwesome5 name="print" size={24} color="white" />
                     <Text style={{
                         color: "white"
                     }}>Cetak</Text>
