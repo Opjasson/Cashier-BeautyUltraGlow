@@ -221,7 +221,7 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
                     <Text style={styles.date}>{createdAt?.split("T")[0]}</Text>
                 </View>
                 <View style={styles.titleRow}>
-                    <View style={styles.verticalLine} />
+                  
                     <View style={styles.content}>
                         <Text style={styles.title}>
                             Nama Kasir : {pelanggan?.toUpperCase()}
@@ -353,12 +353,6 @@ const styles = StyleSheet.create({
     titleRow: {
         flexDirection: "row",
         marginTop: 8,
-    },
-    verticalLine: {
-        width: 5,
-        borderRadius: 3,
-        backgroundColor: "red",
-        marginRight: 10,
     },
     content: {
         flex: 1,
