@@ -1,5 +1,6 @@
 import { apiUrl } from "@/app/config/api";
 import { doctor } from "@/app/inventory/images";
+import { MaterialIcons } from "@expo/vector-icons";
 import { NavigationProp, useFocusEffect } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
@@ -25,6 +26,7 @@ const LoginPage: React.FC<props> = ({ navigation }) => {
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string>();
     const [error, setError] = useState<string>();
+    const [showPassword, setShowPassword] = useState(false);
 
     const [data, setData] = useState([]);
 
@@ -116,30 +118,50 @@ const LoginPage: React.FC<props> = ({ navigation }) => {
                             source={doctor}
                         />
                     </View>
-                    <Text style={styles.textLabel}>Email</Text>
-                    <TextInput
-                        style={{
-                            borderWidth: 1,
-                            marginBottom: 5,
-                            borderRadius: 5,
-                        }}
-                        keyboardType="email-address"
-                        placeholder="Masukan email anda"
-                        onChangeText={(text) => setEmail(text)}
-                    />
 
-                    <Text style={styles.textLabel}>Password</Text>
-                    <TextInput
-                        style={{
-                            borderWidth: 1,
-                            marginBottom: 5,
-                            borderRadius: 5,
-                        }}
-                        keyboardType="default"
-                        secureTextEntry
-                        placeholder="Masukan password anda"
-                        onChangeText={(text) => setPassword(text)}
-                    />
+                    <View style={styles.inputGroup}>
+                        <MaterialIcons
+                            name="person-outline"
+                            size={20}
+                            color="gray"
+                            style={styles.icon}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            keyboardType="email-address"
+                            placeholder="Masukan email anda"
+                            onChangeText={(text) => setEmail(text)}
+                        />
+                    </View>
+
+                    <View style={styles.inputGroup}>
+                        <MaterialIcons
+                            name="lock-outline"
+                            size={20}
+                            color="gray"
+                            style={styles.icon}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Password"
+                            secureTextEntry={!showPassword}
+                            value={password}
+                            onChangeText={setPassword}
+                        />
+                        <TouchableOpacity
+                            onPress={() => setShowPassword(!showPassword)}
+                        >
+                            <MaterialIcons
+                                name={
+                                    showPassword
+                                        ? "visibility-off"
+                                        : "visibility"
+                                }
+                                size={20}
+                                color="gray"
+                            />
+                        </TouchableOpacity>
+                    </View>
 
                     <Text style={error ? styles.errorMsg : styles.hidden}>
                         {error}
@@ -169,6 +191,18 @@ const LoginPage: React.FC<props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    icon: { marginRight: 10 },
+    input: {
+        flex: 1,
+        height: 40,
+    },
+    inputGroup: {
+        flexDirection: "row",
+        alignItems: "center",
+        borderBottomColor: "#ccc",
+        borderBottomWidth: 1,
+        marginBottom: 20,
+    },
     screen: {
         flex: 1,
     },
