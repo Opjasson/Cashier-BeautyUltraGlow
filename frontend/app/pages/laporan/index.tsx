@@ -423,11 +423,10 @@ const Laporan: React.FC<props> = ({ navigation }) => {
 
                     <View
                         style={{
-                            flexDirection: "row",
                             justifyContent: "space-between",
                             alignItems: "center",
                             width: 300,
-                            marginLeft: 50,
+                            marginHorizontal: "auto",
                         }}
                     >
                         <TouchableOpacity
@@ -435,12 +434,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
                             // aksi={showDatepicker}
                             onPress={showDatepicker}
                         >
-                            <FontAwesome6
-                                name="newspaper"
-                                size={24}
-                                color="white"
-                            />
-                            <Text style={{ color: "white" }}>
+                            <Text style={{ color: "white", textAlign: "center" }}>
                                 {date
                                     ? date.toISOString().split("T")[0]
                                     : dateNow}
@@ -451,7 +445,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
                             name="arrow-circle-right"
                             size={24}
                             color="black"
-                            style={{ marginTop: 18 }}
+                            style={{ marginTop: 18, textAlign: "center" }}
                         />
 
                         <TouchableOpacity
@@ -459,12 +453,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
                             // aksi={showDatepicker}
                             onPress={showDatepicker2}
                         >
-                            <FontAwesome6
-                                name="newspaper"
-                                size={24}
-                                color="white"
-                            />
-                            <Text style={{ color: "white" }}>
+                            <Text style={{ color: "white", textAlign: "center" }}>
                                 {date2
                                     ? date2.toISOString().split("T")[0]
                                     : dateNow}
@@ -475,8 +464,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
                         onPress={handleSavePdf}
                         style={styles.buttonDate}
                     >
-                        <FontAwesome5 name="print" size={24} color="white" />
-                        <Text style={{ color: "white" }}>Cetak</Text>
+                        <Text style={{ color: "white", textAlign: "center" }}>Cetak</Text>
                     </TouchableOpacity>
                 </View>
                 {/* menu bagian */}
@@ -567,13 +555,12 @@ const styles = StyleSheet.create({
     buttonDate: {
         borderWidth: 1,
         width: 130,
-        flexDirection: "row",
-        gap: 5,
+        marginHorizontal: "auto",
         marginTop: 20,
         paddingHorizontal: 8,
         paddingVertical: 4,
         borderRadius: 10,
-        backgroundColor: "#2171c6",
+        backgroundColor: "#111",
     },
     container: {
         padding: 10,
@@ -634,6 +621,9 @@ const styles = StyleSheet.create({
     tutupSidebar: {
         flexDirection: "row",
         alignItems: "center",
+    },
+    container: {
+        flex: 1,
     },
     headContainer: {
         flexDirection: "row",
