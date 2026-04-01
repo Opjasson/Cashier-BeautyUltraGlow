@@ -1,15 +1,21 @@
 import { apiUrl } from "@/app/config/api";
-import React, { useState } from "react";
+import { doctor } from "@/app/inventory/images";
+import { NavigationProp, useFocusEffect } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
 import {
-    View,
+    Alert,
+    BackHandler,
+    Image,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    StatusBar,
+    StyleSheet,
     Text,
     TextInput,
     TouchableOpacity,
-    StyleSheet,
+    View,
 } from "react-native";
-import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
-import { NavigationProp } from "@react-navigation/native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 interface props {
     navigation: NavigationProp<any, any>;
@@ -17,6 +23,7 @@ interface props {
 
 const RegisterPage: React.FC<props> = ({ navigation }) => {
     const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confPassword, setConfPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -31,6 +38,7 @@ const RegisterPage: React.FC<props> = ({ navigation }) => {
                 },
                 body: JSON.stringify({
                     email: email,
+                    username: username,
                     password: password,
                     role: "user",
                     confPassword: confPassword,
@@ -49,180 +57,142 @@ const RegisterPage: React.FC<props> = ({ navigation }) => {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.headerText}>Register</Text>
-            </View>
-            <View style={styles.body}>
-                {/* Icon user bulat */}
-                <View style={styles.avatarCircle}>
-                    <FontAwesome name="user" size={36} color="#fff" />
-                </View>
-
-                {/* Card putih */}
-                <View style={styles.card}>
-                    <Text
+        <KeyboardAvoidingView
+            style={styles.screen}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+            <StatusBar barStyle={"light-content"} backgroundColor={"#1F1F1F"} />
+            <ScrollView
+                contentContainerStyle={styles.scrollContent}
+                keyboardShouldPersistTaps="handled"
+            >
+                <View style={styles.containerForm}>
+                    <View style={styles.headLogin}>
+                        <Text style={styles.headLoginText1}>Halaman Register</Text>
+                        <Image
+                            style={{ height: 250, width: 250 }}
+                            source={doctor}
+                        />
+                    </View>
+                    <Text style={styles.textLabel}>Email</Text>
+                    <TextInput
                         style={{
-                            color: "red",
-                            fontSize: 15,
-                            textAlign: "center",
+                            borderWidth: 1,
+                            marginBottom: 5,
+                            borderRadius: 5,
                         }}
-                    >
+                        keyboardType="email-address"
+                        placeholder="Masukan email anda"
+                        onChangeText={(text) => setEmail(text)}
+                    />
+
+                    <Text style={styles.textLabel}>Password</Text>
+                    <TextInput
+                        style={{
+                            borderWidth: 1,
+                            marginBottom: 5,
+                            borderRadius: 5,
+                        }}
+                        keyboardType="default"
+                        secureTextEntry
+                        placeholder="Masukan password anda"
+                        onChangeText={(text) => setPassword(text)}
+                    />
+
+                    <Text style={error ? styles.errorMsg : styles.hidden}>
                         {error}
                     </Text>
-                    <View style={styles.inputGroup}>
-                        <MaterialIcons
-                            name="person-outline"
-                            size={20}
-                            color="gray"
-                            style={styles.icon}
-                        />
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Email"
-                            value={email}
-                            onChangeText={setEmail}
-                        />
-                    </View>
-
-                    <View style={styles.inputGroup}>
-                        <MaterialIcons
-                            name="lock-outline"
-                            size={20}
-                            color="gray"
-                            style={styles.icon}
-                        />
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Password"
-                            secureTextEntry={!showPassword}
-                            value={password}
-                            onChangeText={setPassword}
-                        />
-                        <TouchableOpacity
-                            onPress={() => setShowPassword(!showPassword)}
-                        >
-                            <MaterialIcons
-                                name={
-                                    showPassword
-                                        ? "visibility-off"
-                                        : "visibility"
-                                }
-                                size={20}
-                                color="gray"
-                            />
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={styles.inputGroup}>
-                        <MaterialIcons
-                            name="lock-outline"
-                            size={20}
-                            color="gray"
-                            style={styles.icon}
-                        />
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Confirm Password"
-                            secureTextEntry={!showPassword}
-                            value={confPassword}
-                            onChangeText={setConfPassword}
-                        />
-                        <TouchableOpacity
-                            onPress={() => setShowPassword(!showPassword)}
-                        >
-                            <MaterialIcons
-                                name={
-                                    showPassword
-                                        ? "visibility-off"
-                                        : "visibility"
-                                }
-                                size={20}
-                                color="gray"
-                            />
-                        </TouchableOpacity>
-                    </View>
-
-                    <TouchableOpacity
-                        style={styles.forgotPassword}
-                        onPress={() => navigation.navigate("Login")}
-                    >
-                        <Text style={styles.forgotText}>Login?</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={styles.signInButton}
-                        onPress={() => handleRegister()}
-                    >
-                        <Text style={styles.signInText}>Sign in</Text>
-                    </TouchableOpacity>
                 </View>
-            </View>
-        </SafeAreaView>
+                {/* End Form */}
+
+                <TouchableOpacity style={styles.button} onPress={handleRegister}>
+                    <Text style={{ color: "white" }}>Login</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={styles.buatAkun}
+                    onPress={() => navigation.navigate("CekEmail")}
+                >
+                    <Text>Lupa password akun.</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.buatAkun2}
+                    onPress={() => navigation.navigate("RegisterPage")}
+                >
+                    <Text style={{ color: "#2171c6" }}>Buat akun disini.</Text>
+                </TouchableOpacity>
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 };
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: "#4BA3A2" },
-    header: {
-        height: 50,
-        backgroundColor: "#3F51B5",
-        justifyContent: "center",
-        paddingHorizontal: 16,
-    },
-    headerText: { color: "#fff", fontSize: 18 },
-    body: {
+    screen: {
         flex: 1,
+    },
+    scrollContent: {
+        flexGrow: 1,
+        paddingBottom: 32,
+    },
+    containerForm: {
+        paddingHorizontal: 15,
+        paddingTop: 80,
+    },
+    headLogin: {
         alignItems: "center",
-        paddingTop: 30,
+        marginBottom: 40,
     },
-    avatarCircle: {
-        backgroundColor: "#3F51B5",
-        width: 80,
-        height: 80,
-        borderRadius: 40,
+    headLoginText1: {
+        fontSize: 30,
+        fontWeight: "900",
+        marginBottom: 10,
+        color: "#a5aaaa",
+        alignSelf: "flex-start",
+    },
+    headLoginText2: {
+        fontSize: 20,
+        fontWeight: "light",
+    },
+    button: {
+        backgroundColor: "#2171c6",
+        width: "80%",
+        paddingVertical: 15,
         alignItems: "center",
-        justifyContent: "center",
-        marginBottom: -40,
-        zIndex: 1,
+        borderRadius: 9,
+        marginTop: 20,
+        marginHorizontal: "auto",
     },
-    card: {
-        backgroundColor: "#fff",
-        width: "85%",
-        borderRadius: 10,
-        padding: 20,
-        paddingTop: 60,
-        elevation: 5,
+    buatAkun: {
+        width: "80%",
+        paddingVertical: 15,
+        alignItems: "center",
+        borderRadius: 9,
+        marginHorizontal: "auto",
     },
-    inputGroup: {
+    buatAkun2: {
+        width: "80%",
+        alignItems: "center",
+        borderRadius: 9,
+        marginHorizontal: "auto",
+        color: "#2171c6",
+    },
+    topBar: {
         flexDirection: "row",
-        alignItems: "center",
-        borderBottomColor: "#ccc",
-        borderBottomWidth: 1,
-        marginBottom: 20,
+        justifyContent: "space-around",
+        marginBottom: 30,
     },
-    icon: { marginRight: 10 },
-    input: {
-        flex: 1,
-        height: 40,
+    textLabel: {
+        fontWeight: "bold",
+        fontSize: 18,
+        paddingHorizontal: 3,
     },
-    forgotPassword: {
-        alignItems: "flex-end",
-        marginBottom: 20,
+    errorMsg: {
+        fontSize: 18,
+        color: "red",
+        textAlign: "center",
     },
-    forgotText: {
-        fontSize: 12,
-        color: "gray",
-    },
-    signInButton: {
-        backgroundColor: "#F57C00",
-        paddingVertical: 12,
-        borderRadius: 6,
-        alignItems: "center",
-    },
-    signInText: {
-        color: "#fff",
-        fontSize: 16,
+    hidden: {
+        display: "none",
     },
 });
 
