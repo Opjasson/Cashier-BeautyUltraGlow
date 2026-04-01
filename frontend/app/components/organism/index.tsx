@@ -14,7 +14,6 @@ interface props {
     onPress4: () => void;
     onPress5: () => void;
     onPress6: () => void;
-    onPress7: () => void;
     toggleOpen: () => void;
     status?: boolean;
 }
@@ -27,7 +26,6 @@ const DrawerContent: React.FC<props> = ({
     onPress4,
     onPress5,
     onPress6,
-    onPress7,
     status,
 }) => {
     return (
@@ -62,7 +60,7 @@ const DrawerContent: React.FC<props> = ({
                         padding: 6,
                         borderRadius: 8
                     }}>
-                    <Text style={styles.sidebarMenu}>🛒 Cart</Text>
+                    <Text style={styles.sidebarMenu}>🛒 Keranjang Belanjaku</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -87,7 +85,7 @@ const DrawerContent: React.FC<props> = ({
                         borderRadius: 8,
                         display: status ? "none" : "flex",
                     }}>
-                    <Text style={styles.sidebarMenu}>📊 History Pesanan</Text>
+                    <Text style={styles.sidebarMenu}>📊 Riwayat Orderku</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -100,7 +98,7 @@ const DrawerContent: React.FC<props> = ({
                         borderRadius: 8,
                         display: status ? "none" : "flex",
                     }}>
-                    <Text style={styles.sidebarMenu}>🧰 Atur Product</Text>
+                    <Text style={styles.sidebarMenu}>🧰 Atur Productku</Text>
                     
                 </TouchableOpacity>
 
@@ -114,22 +112,8 @@ const DrawerContent: React.FC<props> = ({
                         borderRadius: 8,
                         display: status ? "none" : "flex",
                     }}>
-                    <Text style={styles.sidebarMenu}>🗒️ Laporan</Text>
+                    <Text style={styles.sidebarMenu}>🗒️ Laporanku</Text>
                 
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    onPress={onPress7}
-                    style={{
-                        flexDirection: "row",
-                        backgroundColor: "#ebf4ba",
-                        gap: 5,
-                        padding: 6,
-                        borderRadius: 8,
-                        display: status ? "none" : "flex",
-                    }}>
-                    <Text style={styles.sidebarMenu}>🙍‍♀️ Kelola User</Text>
-                   
                 </TouchableOpacity>
 
                 <TouchableOpacity

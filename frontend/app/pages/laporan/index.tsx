@@ -100,7 +100,6 @@ const Laporan: React.FC<props> = ({ navigation }) => {
                 onPress4={() => logOut()}
                 onPress5={() => navigation.navigate("KelolaProduct")}
                 onPress6={() => navigation.navigate("Laporan")}
-                onPress7={() => navigation.navigate("KelolaUser")}
             />
         );
     };
@@ -434,7 +433,9 @@ const Laporan: React.FC<props> = ({ navigation }) => {
                             // aksi={showDatepicker}
                             onPress={showDatepicker}
                         >
-                            <Text style={{ color: "white", textAlign: "center" }}>
+                            <Text
+                                style={{ color: "white", textAlign: "center" }}
+                            >
                                 {date
                                     ? date.toISOString().split("T")[0]
                                     : dateNow}
@@ -453,7 +454,9 @@ const Laporan: React.FC<props> = ({ navigation }) => {
                             // aksi={showDatepicker}
                             onPress={showDatepicker2}
                         >
-                            <Text style={{ color: "white", textAlign: "center" }}>
+                            <Text
+                                style={{ color: "white", textAlign: "center" }}
+                            >
                                 {date2
                                     ? date2.toISOString().split("T")[0]
                                     : dateNow}
@@ -464,7 +467,9 @@ const Laporan: React.FC<props> = ({ navigation }) => {
                         onPress={handleSavePdf}
                         style={styles.buttonDate}
                     >
-                        <Text style={{ color: "white", textAlign: "center" }}>Cetak</Text>
+                        <Text style={{ color: "white", textAlign: "center" }}>
+                            Cetak
+                        </Text>
                     </TouchableOpacity>
                 </View>
                 {/* menu bagian */}

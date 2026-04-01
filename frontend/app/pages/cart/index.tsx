@@ -293,21 +293,18 @@ const Cart: React.FC<props> = ({ navigation }) => {
                     });
                 });
 
-                await fetch(
-                    apiUrl(`/transaksi/${idTransaksi}`),
-                    {
-                        method: "PATCH",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            totalHarga: totalHarga,
-                            buktiBayar: "xxx",
-                            catatanTambahan: "xxxx",
-                            cash: cash,
-                        }),
+                await fetch(apiUrl(`/transaksi/${idTransaksi}`), {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
                     },
-                );
+                    body: JSON.stringify({
+                        totalHarga: totalHarga,
+                        buktiBayar: "xxx",
+                        catatanTambahan: "xxxx",
+                        cash: cash,
+                    }),
+                });
                 alert("Pesanan Sedang Diproses :)");
                 navigation.navigate("Home");
             } catch (error) {
@@ -330,7 +327,6 @@ const Cart: React.FC<props> = ({ navigation }) => {
                 onPress4={() => logOut()}
                 onPress5={() => navigation.navigate("KelolaProduct")}
                 onPress6={() => navigation.navigate("Laporan")}
-                onPress7={() => navigation.navigate("KelolaUser")}
             />
         );
     };

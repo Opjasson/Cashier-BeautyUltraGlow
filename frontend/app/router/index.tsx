@@ -16,7 +16,6 @@ import {
     Laporan,
     CekEmail,
     ChangePass,
-    SetAkun,
     TambahUser,
 } from "../pages";
 import UbahUser from "../pages/ubahUser";
@@ -63,7 +62,6 @@ const Router = () => {
                 component={UbahProduct}
             />
             <Stack.Screen name="HistoryPesanan" component={HistoryPesanan} />
-            <Stack.Screen name="KelolaUser" component={SetAkun} />
             <Stack.Screen
                 options={{
                     headerShown: true,
