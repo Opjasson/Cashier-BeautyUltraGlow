@@ -1,3 +1,4 @@
+import { apiUrl } from "@/app/config/api";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationProp, RouteProp } from "@react-navigation/native";
@@ -43,7 +44,7 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
 
     const getTransaksiByUUID = async () => {
         const response = await fetch(
-            `http://192.168.106.12:5000/transaksi/${routeUuid}`,
+            apiUrl(`/transaksi/${routeUuid}`),
         );
         const dataJson = await response.json();
         setCart(dataJson.keranjangs);
@@ -73,7 +74,7 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
 
     const getDataBarang = async () => {
         try {
-            const response = await fetch("http://192.168.106.12:5000/product");
+            const response = await fetch(apiUrl("/product"));
             const barang = await response.json();
             setBarang(barang);
         } catch (error) {
@@ -90,7 +91,7 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
     }, []);
 
     const deleteTransaksi = async () => {
-        await fetch(`http://192.168.106.12:5000/transaksi/${id}`, {
+        await fetch(apiUrl(`/transaksi/${id}`), {
             method: "DELETE",
         });
         alert("Transaksi Berhasil Dihapus!");
@@ -98,7 +99,7 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
     };
 
     const handleUpdateStatus = async () => {
-        await fetch(`http://192.168.106.12:5000/transaksi/${id}`, {
+        await fetch(apiUrl(`/transaksi/${id}`), {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -186,32 +187,32 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
 
     const handleSavePdf = async () => {
         const htmlContent = handleCetak();
-        
-                const { uri } = await Print.printToFileAsync({
-                    html: htmlContent,
-                });
-        
-                const customFileName = `Nota Transaksi-Ultra Glow_${dateNow}.pdf`;
-        
-                // buat file target
-                const targetFile = new FileSystem.File(
-                    FileSystem.Paths.document,
-                    customFileName,
-                );
-        
-                // cek dulu
-                if (await targetFile.exists) {
-                    await targetFile.delete();
-                }
-        
-                // file sumber
-                const sourceFile = new FileSystem.File(uri);
-        
-                // move → harus File object
-                await sourceFile.move(targetFile);
-        
-                // share pakai uri hasil target
-                await Sharing.shareAsync(targetFile.uri);
+
+        const { uri } = await Print.printToFileAsync({
+            html: htmlContent,
+        });
+
+        const customFileName = `Nota Transaksi-Ultra Glow_${dateNow}.pdf`;
+
+        // buat file target
+        const targetFile = new FileSystem.File(
+            FileSystem.Paths.document,
+            customFileName,
+        );
+
+        // cek dulu
+        if (await targetFile.exists) {
+            await targetFile.delete();
+        }
+
+        // file sumber
+        const sourceFile = new FileSystem.File(uri);
+
+        // move → harus File object
+        await sourceFile.move(targetFile);
+
+        // share pakai uri hasil target
+        await Sharing.shareAsync(targetFile.uri);
     };
 
     return (
@@ -221,7 +222,6 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
                     <Text style={styles.date}>{createdAt?.split("T")[0]}</Text>
                 </View>
                 <View style={styles.titleRow}>
-                  
                     <View style={styles.content}>
                         <Text style={styles.title}>
                             Nama Kasir : {pelanggan?.toUpperCase()}
@@ -295,9 +295,13 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
                         paddingHorizontal: 13,
                     }}
                 >
-                    <Text style={{
-                        color: "white"
-                    }}>Delete</Text>
+                    <Text
+                        style={{
+                            color: "white",
+                        }}
+                    >
+                        Delete
+                    </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -308,12 +312,16 @@ const DetailTransaksi: React.FC<props> = ({ route, navigation }) => {
                         borderRadius: 10,
                         // paddingHorizontal: 13,
                         flexDirection: "row",
-                        gap: 8
+                        gap: 8,
                     }}
                 >
-                    <Text style={{
-                        color: "white"
-                    }}>Cetak</Text>
+                    <Text
+                        style={{
+                            color: "white",
+                        }}
+                    >
+                        Cetak
+                    </Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>

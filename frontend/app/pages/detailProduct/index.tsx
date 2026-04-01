@@ -1,3 +1,4 @@
+import { apiUrl } from "@/app/config/api";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { NavigationProp, RouteProp } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
@@ -71,7 +72,7 @@ const DetailProduct: React.FC<props> = ({ navigation, route }) => {
 
     // get product -----------------------
     const getProducts = async () => {
-        const response = await fetch("http://192.168.106.12:5000/product");
+        const response = await fetch(apiUrl("/product"));
         const data = await response.json();
         setProducts(data);
     };
@@ -84,7 +85,7 @@ const DetailProduct: React.FC<props> = ({ navigation, route }) => {
 
     // Get Data Login --------------------------
     const getUserId = async () => {
-        const response = await fetch("http://192.168.106.12:5000/login");
+        const response = await fetch(apiUrl("/login"));
         const data = await response.json();
         setIdLogin(Object.values(data)[0]?.id);
         setId(Object.values(data)[0]?.userId);
@@ -95,7 +96,7 @@ const DetailProduct: React.FC<props> = ({ navigation, route }) => {
     }, []);
 
     const getAkunLoggin = async () => {
-        const response = await fetch(`http://192.168.106.12:5000/user/${id}`);
+        const response = await fetch(apiUrl(`/user/${id}`));
         const user = await response.json();
         // console.log("login",user);
         setUser(user?.role);
@@ -109,9 +110,7 @@ const DetailProduct: React.FC<props> = ({ navigation, route }) => {
 
     useEffect(() => {
         const getTransaksi = async () => {
-            const response = await fetch(
-                "http://192.168.106.12:5000/transaksi",
-            );
+            const response = await fetch(apiUrl("/transaksi"));
             const transaksiS = await response.json();
             setDataTransaksi(transaksiS.response);
             setLoading(false);
@@ -165,7 +164,7 @@ const DetailProduct: React.FC<props> = ({ navigation, route }) => {
             navigation.navigate("Cart");
         } else {
             try {
-                await fetch(`http://192.168.106.12:5000/cart`, {
+                await fetch(apiUrl("/cart"), {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

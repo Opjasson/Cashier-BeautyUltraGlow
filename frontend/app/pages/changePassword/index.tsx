@@ -1,3 +1,4 @@
+import { apiUrl } from "@/app/config/api";
 import { NavigationProp, RouteProp } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
@@ -26,7 +27,7 @@ const ChangePass: React.FC<props> = ({ navigation, route }) => {
     const handleChange = async () => {
         if (password && confPassword) {
             const response = await fetch(
-                `http://192.168.106.12:5000/user/${user.id}`,
+                apiUrl(`/user/${user.id}`),
                 {
                     method: "PATCH",
                     headers: {

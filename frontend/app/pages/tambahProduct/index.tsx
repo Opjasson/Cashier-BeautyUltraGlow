@@ -1,3 +1,4 @@
+import { apiUrl } from "@/app/config/api";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Picker } from "@react-native-picker/picker";
 import { NavigationProp, RouteProp } from "@react-navigation/native";
@@ -99,7 +100,7 @@ const TambahProduct: React.FC<props> = ({ navigation, route }) => {
     // Handle Update Product -----------
     const handleUpdateProduct = async () => {
         try {
-            await fetch(`http://192.168.106.12:5000/product`, {
+            await fetch(apiUrl("/product"), {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

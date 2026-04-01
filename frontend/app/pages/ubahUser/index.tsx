@@ -1,3 +1,4 @@
+import { apiUrl } from "@/app/config/api";
 import { NavigationProp, RouteProp } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
@@ -29,7 +30,7 @@ const UbahUser: React.FC<props> = ({ navigation, route }) => {
     const handleUbah = async (id: number) => {
         if (email && password && confPassword) {
             const response = await fetch(
-                `http://192.168.106.12:5000/user/${id}`,
+                apiUrl(`/user/${id}`),
                 {
                     method: "PATCH",
                     headers: {

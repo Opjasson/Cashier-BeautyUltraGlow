@@ -1,3 +1,4 @@
+import { apiUrl } from "@/app/config/api";
 import { system } from "@/app/inventory/images";
 import { NavigationProp } from "@react-navigation/native";
 import React, { useState } from "react";
@@ -23,7 +24,7 @@ const CekEmail: React.FC<props> = ({ navigation }) => {
     const handleCek = async () => {
         if (email) {
             const response = await fetch(
-                "http://192.168.106.12:5000/forgotPass",
+                apiUrl("/forgotPass"),
                 {
                     method: "POST",
                     headers: {

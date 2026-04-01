@@ -1,3 +1,4 @@
+import { apiUrl } from "@/app/config/api";
 import { DrawerContent } from "@/app/components";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
@@ -78,7 +79,7 @@ const Home: React.FC<props> = ({ navigation }) => {
 
     // Get Data Login --------------------------
     const getUserId = async () => {
-        const response = await fetch("http://192.168.106.12:5000/login");
+        const response = await fetch(apiUrl("/login"));
         const data = await response.json();
         const token = await AsyncStorage.getAllKeys();
         console.log("TOKENALL", token);
@@ -92,7 +93,7 @@ const Home: React.FC<props> = ({ navigation }) => {
     }, []);
 
     const getAkunLoggin = async () => {
-        const response = await fetch(`http://192.168.106.12:5000/user/${id}`);
+        const response = await fetch(apiUrl(`/user/${id}`));
         const user = await response.json();
         // console.log("login",user);
         if (user != null) {
@@ -102,7 +103,7 @@ const Home: React.FC<props> = ({ navigation }) => {
     };
 
     const logOut = async () => {
-        await fetch(`http://192.168.106.12:5000/login/${idLogin}`, {
+        await fetch(apiUrl(`/login/${idLogin}`), {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -115,7 +116,7 @@ const Home: React.FC<props> = ({ navigation }) => {
     // ------------------------
 
     const getProducts = async () => {
-        const response = await fetch("http://192.168.106.12:5000/product");
+        const response = await fetch(apiUrl("/product"));
         const data = await response.json();
         setProducts(data);
         // console.log(data);
@@ -140,7 +141,7 @@ const Home: React.FC<props> = ({ navigation }) => {
     };
 
     const createTransaksi = async () => {
-        const response = await fetch("http://192.168.106.12:5000/transaksi", {
+        const response = await fetch(apiUrl("/transaksi"), {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -154,7 +155,7 @@ const Home: React.FC<props> = ({ navigation }) => {
     };
 
     const getTransaksi = async () => {
-        const response = await fetch("http://192.168.106.12:5000/transaksi");
+        const response = await fetch(apiUrl("/transaksi"));
         const transaksiS = await response.json();
         // console.log(transaksiS.response);
         setDataTransaksi(transaksiS.response);

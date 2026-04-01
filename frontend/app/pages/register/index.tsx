@@ -1,3 +1,4 @@
+import { apiUrl } from "@/app/config/api";
 import React, { useState } from "react";
 import {
     View,
@@ -23,7 +24,7 @@ const RegisterPage: React.FC<props> = ({ navigation }) => {
 
     const handleRegister = async () => {
         if (email && password && confPassword) {
-            const response = await fetch("http://192.168.106.12:5000/user", {
+            const response = await fetch(apiUrl("/user"), {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -40,7 +41,7 @@ const RegisterPage: React.FC<props> = ({ navigation }) => {
                 setError("Password sesuaikan Confirm Password!");
             } else {
                 alert("Berhasil membuat akun");
-                navigation.navigate("Login");
+                navigation.navigate("LoginPage");
             }
         } else {
             setError("Isi dengan lengkap!");
@@ -65,7 +66,8 @@ const RegisterPage: React.FC<props> = ({ navigation }) => {
                             color: "red",
                             fontSize: 15,
                             textAlign: "center",
-                        }}>
+                        }}
+                    >
                         {error}
                     </Text>
                     <View style={styles.inputGroup}>
@@ -98,7 +100,8 @@ const RegisterPage: React.FC<props> = ({ navigation }) => {
                             onChangeText={setPassword}
                         />
                         <TouchableOpacity
-                            onPress={() => setShowPassword(!showPassword)}>
+                            onPress={() => setShowPassword(!showPassword)}
+                        >
                             <MaterialIcons
                                 name={
                                     showPassword
@@ -126,7 +129,8 @@ const RegisterPage: React.FC<props> = ({ navigation }) => {
                             onChangeText={setConfPassword}
                         />
                         <TouchableOpacity
-                            onPress={() => setShowPassword(!showPassword)}>
+                            onPress={() => setShowPassword(!showPassword)}
+                        >
                             <MaterialIcons
                                 name={
                                     showPassword
@@ -141,13 +145,15 @@ const RegisterPage: React.FC<props> = ({ navigation }) => {
 
                     <TouchableOpacity
                         style={styles.forgotPassword}
-                        onPress={() => navigation.navigate("Login")}>
+                        onPress={() => navigation.navigate("Login")}
+                    >
                         <Text style={styles.forgotText}>Login?</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         style={styles.signInButton}
-                        onPress={() => handleRegister()}>
+                        onPress={() => handleRegister()}
+                    >
                         <Text style={styles.signInText}>Sign in</Text>
                     </TouchableOpacity>
                 </View>

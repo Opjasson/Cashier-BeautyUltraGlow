@@ -1,3 +1,4 @@
+import { apiUrl } from "@/app/config/api";
 import { DrawerContent } from "@/app/components";
 import Feather from "@expo/vector-icons/Feather";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -37,7 +38,7 @@ const KelolaProduct: React.FC<props> = ({ navigation }) => {
 
     // Get Data Login --------------------------
     const getUserId = async () => {
-        const response = await fetch("http://192.168.106.12:5000/login");
+        const response = await fetch(apiUrl("/login"));
         const data = await response.json();
         setIdLogin(Object.values(data)[0]?.id);
     };
@@ -47,7 +48,7 @@ const KelolaProduct: React.FC<props> = ({ navigation }) => {
     }, []);
 
     const logOut = async () => {
-        await fetch(`http://192.168.106.12:5000/login/${idLogin}`, {
+        await fetch(apiUrl(`/login/${idLogin}`), {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -57,7 +58,7 @@ const KelolaProduct: React.FC<props> = ({ navigation }) => {
     };
 
     const getProducts = async () => {
-        const response = await fetch("http://192.168.106.12:5000/product");
+        const response = await fetch(apiUrl("/product"));
         const data = await response.json();
         setProducts(data);
         // console.log(data);
@@ -68,7 +69,7 @@ const KelolaProduct: React.FC<props> = ({ navigation }) => {
     }, []);
 
     const handleDeleteProduct = async (productId: number) => {
-        await fetch(`http://192.168.106.12:5000/product/${productId}`, {
+        await fetch(apiUrl(`/product/${productId}`), {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

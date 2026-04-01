@@ -1,3 +1,4 @@
+import { apiUrl } from "@/app/config/api";
 import { DrawerContent } from "@/app/components";
 import { logo } from "@/app/inventory/images";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -70,7 +71,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
 
     // Get Data Login --------------------------
     const getUserId = async () => {
-        const response = await fetch("http://192.168.106.12:5000/login");
+        const response = await fetch(apiUrl("/login"));
         const data = await response.json();
         setIdLogin(Object.values(data)[0]?.id);
     };
@@ -80,7 +81,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
     }, []);
 
     const logOut = async () => {
-        await fetch(`http://192.168.106.12:5000/login/${idLogin}`, {
+        await fetch(apiUrl(`/login/${idLogin}`), {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -119,7 +120,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
 
     const getCart = async () => {
         try {
-            const response = await fetch("http://192.168.106.12:5000/cart");
+            const response = await fetch(apiUrl("/cart"));
             const cat = await response.json();
             setCart(cat.response);
         } catch (error) {
@@ -129,7 +130,7 @@ const Laporan: React.FC<props> = ({ navigation }) => {
 
     const getDataBarang = async () => {
         try {
-            const response = await fetch("http://192.168.106.12:5000/product");
+            const response = await fetch(apiUrl("/product"));
             const barang = await response.json();
             setBarang(barang);
         } catch (error) {
@@ -391,7 +392,11 @@ const Laporan: React.FC<props> = ({ navigation }) => {
             <ScrollView style={{ paddingLeft: 10 }}>
                 <View>
                     <Image
-                        style={{ height: 190, width: 190, marginHorizontal: "auto" }}
+                        style={{
+                            height: 190,
+                            width: 190,
+                            marginHorizontal: "auto",
+                        }}
                         source={logo}
                     />
 
@@ -411,7 +416,8 @@ const Laporan: React.FC<props> = ({ navigation }) => {
                             textAlign: "center",
                         }}
                     >
-                        Jln Raya, Kalimati, Kec. Adiwerna, Kabupaten Tegal, Jawa Tengah
+                        Jln Raya, Kalimati, Kec. Adiwerna, Kabupaten Tegal, Jawa
+                        Tengah
                     </Text>
                     <Text style={{ borderBottomWidth: 2, height: 2 }}></Text>
 
@@ -628,9 +634,6 @@ const styles = StyleSheet.create({
     tutupSidebar: {
         flexDirection: "row",
         alignItems: "center",
-    },
-    container: {
-        flex: 1,
     },
     headContainer: {
         flexDirection: "row",

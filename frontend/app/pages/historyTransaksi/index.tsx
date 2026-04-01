@@ -1,3 +1,4 @@
+import { apiUrl } from "@/app/config/api";
 import { DrawerContent } from "@/app/components";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { NavigationProp } from "@react-navigation/native";
@@ -78,7 +79,7 @@ const HistoryPesanan: React.FC<props> = ({ navigation }) => {
 
     // Get Data Login --------------------------
     const getUserId = async () => {
-        const response = await fetch("http://192.168.106.12:5000/login");
+        const response = await fetch(apiUrl("/login"));
         const data = await response.json();
         setIdLogin(Object.values(data)[0]?.id);
     };
@@ -88,7 +89,7 @@ const HistoryPesanan: React.FC<props> = ({ navigation }) => {
     }, []);
 
     const logOut = async () => {
-        await fetch(`http://192.168.106.12:5000/login/${idLogin}`, {
+        await fetch(apiUrl(`/login/${idLogin}`), {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -99,9 +100,7 @@ const HistoryPesanan: React.FC<props> = ({ navigation }) => {
 
     const getHistorys = async () => {
         try {
-            const response = await fetch(
-                "http://192.168.106.12:5000/transaksi",
-            );
+            const response = await fetch(apiUrl("/transaksi"));
             const history = (await response.json()) as {
                 response: {
                     keranjangs: [
@@ -135,7 +134,7 @@ const HistoryPesanan: React.FC<props> = ({ navigation }) => {
 
     const getDataBarang = async () => {
         try {
-            const response = await fetch("http://192.168.106.12:5000/product");
+            const response = await fetch(apiUrl("/product"));
             const barang = await response.json();
             console.log(barang);
             setBarang(barang);

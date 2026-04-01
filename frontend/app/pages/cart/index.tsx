@@ -1,3 +1,4 @@
+import { apiUrl } from "@/app/config/api";
 import { DrawerContent } from "@/app/components";
 import { AntDesign } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -86,7 +87,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
 
     // get product -----------------------
     const getProducts = async () => {
-        const response = await fetch("http://192.168.106.12:5000/product");
+        const response = await fetch(apiUrl("/product"));
         const data = await response.json();
         setProducts(data);
     };
@@ -99,7 +100,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
 
     // Get Data Login --------------------------
     const getUserId = async () => {
-        const response = await fetch("http://192.168.106.12:5000/login");
+        const response = await fetch(apiUrl("/login"));
         const data = await response.json();
         setIdLogin(Object.values(data)[0]?.id);
         setId(Object.values(data)[0]?.userId);
@@ -110,7 +111,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
     }, []);
 
     const getAkunLoggin = async () => {
-        const response = await fetch(`http://192.168.106.12:5000/user/${id}`);
+        const response = await fetch(apiUrl(`/user/${id}`));
         const user = await response.json();
         // console.log("login",user);
         setUser(user?.role);
@@ -118,7 +119,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
     };
 
     const logOut = async () => {
-        await fetch(`http://192.168.106.12:5000/login/${idLogin}`, {
+        await fetch(apiUrl(`/login/${idLogin}`), {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -133,9 +134,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
 
     useEffect(() => {
         const getTransaksi = async () => {
-            const response = await fetch(
-                "http://192.168.106.12:5000/transaksi",
-            );
+            const response = await fetch(apiUrl("/transaksi"));
             const transaksiS = await response.json();
             setDataTransaksi(transaksiS.response);
             setLoading(false);
@@ -204,7 +203,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
 
     // Handle delete cart ---------------------
     const handleDeleteCart = async (cartId: number) => {
-        await fetch(`http://192.168.106.12:5000/cart/${cartId}`, {
+        await fetch(apiUrl(`/cart/${cartId}`), {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -283,7 +282,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
         if (dataShow.length > 0 && cash > 0) {
             try {
                 dataShow.forEach(async (item: any) => {
-                    await fetch(`http://192.168.106.12:5000/cart/${item.id}`, {
+                    await fetch(apiUrl(`/cart/${item.id}`), {
                         method: "PATCH",
                         headers: {
                             "Content-Type": "application/json",
@@ -295,7 +294,7 @@ const Cart: React.FC<props> = ({ navigation }) => {
                 });
 
                 await fetch(
-                    `http://192.168.106.12:5000/transaksi/${idTransaksi}`,
+                    apiUrl(`/transaksi/${idTransaksi}`),
                     {
                         method: "PATCH",
                         headers: {
