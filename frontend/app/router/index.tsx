@@ -20,6 +20,7 @@ import {
     TambahUser,
 } from "../pages";
 import UbahUser from "../pages/ubahUser";
+import RegisterPage from "../pages/register";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,7 @@ const Router = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="SplashScreen" component={SplashScreen} />
+            <Stack.Screen name="RegisterPage" component={RegisterPage} />
             <Stack.Screen name="LoginPage" component={LoginPage} />
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="KelolaProduct" component={KelolaProduct} />

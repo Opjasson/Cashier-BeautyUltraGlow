@@ -149,7 +149,7 @@ const LoginPage: React.FC<props> = ({ navigation }) => {
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.buatAkun2}
-                onPress={() => navigation.navigate("CekEmail")}
+                onPress={() => navigation.navigate("RegisterPage")}
             >
                 <Text style={{ color: "#2171c6" }}>Buat akun disini.</Text>
             </TouchableOpacity>
