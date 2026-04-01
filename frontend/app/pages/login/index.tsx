@@ -147,6 +147,12 @@ const LoginPage: React.FC<props> = ({ navigation }) => {
             >
                 <Text>Lupa password akun.</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.buatAkun2}
+                onPress={() => navigation.navigate("CekEmail")}
+            >
+                <Text style={{ color: "#2171c6" }}>Buat akun disini.</Text>
+            </TouchableOpacity>
         </ScrollView>
     );
 };
@@ -186,6 +192,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 9,
         marginHorizontal: "auto",
+    },
+    buatAkun2: {
+        width: "80%",
+        alignItems: "center",
+        borderRadius: 9,
+        marginHorizontal: "auto",
+        color: "#2171c6",
     },
     topBar: {
         flexDirection: "row",
