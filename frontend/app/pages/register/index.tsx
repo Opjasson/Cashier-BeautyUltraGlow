@@ -1,5 +1,6 @@
 import { apiUrl } from "@/app/config/api";
-import { doctor } from "@/app/inventory/images";
+import { femaleDoctor } from "@/app/inventory/images";
+import { MaterialIcons } from "@expo/vector-icons";
 import { NavigationProp, useFocusEffect } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
@@ -68,36 +69,102 @@ const RegisterPage: React.FC<props> = ({ navigation }) => {
             >
                 <View style={styles.containerForm}>
                     <View style={styles.headLogin}>
-                        <Text style={styles.headLoginText1}>Halaman Register</Text>
+                        <Text style={styles.headLoginText1}>
+                            Halaman Register
+                        </Text>
                         <Image
                             style={{ height: 250, width: 250 }}
-                            source={doctor}
+                            source={femaleDoctor}
                         />
                     </View>
-                    <Text style={styles.textLabel}>Email</Text>
-                    <TextInput
-                        style={{
-                            borderWidth: 1,
-                            marginBottom: 5,
-                            borderRadius: 5,
-                        }}
-                        keyboardType="email-address"
-                        placeholder="Masukan email anda"
-                        onChangeText={(text) => setEmail(text)}
-                    />
 
-                    <Text style={styles.textLabel}>Password</Text>
-                    <TextInput
-                        style={{
-                            borderWidth: 1,
-                            marginBottom: 5,
-                            borderRadius: 5,
-                        }}
-                        keyboardType="default"
-                        secureTextEntry
-                        placeholder="Masukan password anda"
-                        onChangeText={(text) => setPassword(text)}
-                    />
+                    <View style={styles.inputGroup}>
+                        <MaterialIcons
+                            name="person-outline"
+                            size={20}
+                            color="gray"
+                            style={styles.icon}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Username"
+                            value={username}
+                            onChangeText={setUsername}
+                        />
+                    </View>
+
+                    <View style={styles.inputGroup}>
+                        <MaterialIcons
+                            name="person-outline"
+                            size={20}
+                            color="gray"
+                            style={styles.icon}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Email"
+                            value={email}
+                            onChangeText={setEmail}
+                        />
+                    </View>
+
+                    <View style={styles.inputGroup}>
+                        <MaterialIcons
+                            name="lock-outline"
+                            size={20}
+                            color="gray"
+                            style={styles.icon}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Password"
+                            secureTextEntry={!showPassword}
+                            value={password}
+                            onChangeText={setPassword}
+                        />
+                        <TouchableOpacity
+                            onPress={() => setShowPassword(!showPassword)}
+                        >
+                            <MaterialIcons
+                                name={
+                                    showPassword
+                                        ? "visibility-off"
+                                        : "visibility"
+                                }
+                                size={20}
+                                color="gray"
+                            />
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={styles.inputGroup}>
+                        <MaterialIcons
+                            name="lock-outline"
+                            size={20}
+                            color="gray"
+                            style={styles.icon}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Confirm Password"
+                            secureTextEntry={!showPassword}
+                            value={confPassword}
+                            onChangeText={setConfPassword}
+                        />
+                        <TouchableOpacity
+                            onPress={() => setShowPassword(!showPassword)}
+                        >
+                            <MaterialIcons
+                                name={
+                                    showPassword
+                                        ? "visibility-off"
+                                        : "visibility"
+                                }
+                                size={20}
+                                color="gray"
+                            />
+                        </TouchableOpacity>
+                    </View>
 
                     <Text style={error ? styles.errorMsg : styles.hidden}>
                         {error}
@@ -105,21 +172,18 @@ const RegisterPage: React.FC<props> = ({ navigation }) => {
                 </View>
                 {/* End Form */}
 
-                <TouchableOpacity style={styles.button} onPress={handleRegister}>
-                    <Text style={{ color: "white" }}>Login</Text>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={handleRegister}
+                >
+                    <Text style={{ color: "white" }}>Buat Akun</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    style={styles.buatAkun}
-                    onPress={() => navigation.navigate("CekEmail")}
-                >
-                    <Text>Lupa password akun.</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
                     style={styles.buatAkun2}
-                    onPress={() => navigation.navigate("RegisterPage")}
+                    onPress={() => navigation.navigate("LoginPage")}
                 >
-                    <Text style={{ color: "#2171c6" }}>Buat akun disini.</Text>
+                    <Text style={{ color: "#2171c6" }}>Sudah punya akun? login disini</Text>
                 </TouchableOpacity>
             </ScrollView>
         </KeyboardAvoidingView>
@@ -127,6 +191,18 @@ const RegisterPage: React.FC<props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    icon: { marginRight: 10 },
+    input: {
+        flex: 1,
+        height: 40,
+    },
+    inputGroup: {
+        flexDirection: "row",
+        alignItems: "center",
+        borderBottomColor: "#ccc",
+        borderBottomWidth: 1,
+        marginBottom: 20,
+    },
     screen: {
         flex: 1,
     },
@@ -171,6 +247,7 @@ const styles = StyleSheet.create({
     },
     buatAkun2: {
         width: "80%",
+        marginTop: 15,
         alignItems: "center",
         borderRadius: 9,
         marginHorizontal: "auto",
